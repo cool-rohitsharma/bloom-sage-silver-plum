@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Ink Desk",
+      "hasCanvas": false,
+      "bodyTextLen": 1308,
+      "bodyTextHash": "364c912c98edb82beee33282beb82655fc1557eece1d0b5b652027dc6e0a11ec",
+      "bodyTextPrefix": "Skip to notes Ink Desk daily revision Desk Notebook 15 min Drill",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Ink Desk",
+      "hasCanvas": false,
+      "bodyTextLen": 1293,
+      "bodyTextHash": "2304b0aae5622bfc3b168a81c4d60b28ddf04627a15b4d7c9ce94a301212a0bb",
+      "bodyTextPrefix": "Skip to notes Ink Desk close the notes. say it aloud. Ink Desk O",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}

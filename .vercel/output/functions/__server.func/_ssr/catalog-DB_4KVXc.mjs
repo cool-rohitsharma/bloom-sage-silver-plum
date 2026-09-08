@@ -1,0 +1,3392 @@
+import { i as drills } from "./paper-KkfcRZ0A.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/catalog-DB_4KVXc.js
+var chapters = [
+	{
+		id: "oop",
+		roman: "I",
+		title: "OOP & Core Java",
+		subtitle: "The language, not the framework."
+	},
+	{
+		id: "java8",
+		roman: "II",
+		title: "Java 8+",
+		subtitle: "Lambdas, streams, Optional, dates."
+	},
+	{
+		id: "modern",
+		roman: "III",
+		title: "Java 17 & 21",
+		subtitle: "Records, sealed types, virtual threads."
+	},
+	{
+		id: "strings",
+		roman: "IV",
+		title: "Strings & Copying",
+		subtitle: "Immutability, intern, clone."
+	},
+	{
+		id: "collections",
+		roman: "V",
+		title: "Collections",
+		subtitle: "HashMap internals and choosing structures."
+	},
+	{
+		id: "concurrency",
+		roman: "VI",
+		title: "Concurrency",
+		subtitle: "Threads, locks, executors, JMM."
+	},
+	{
+		id: "jvm",
+		roman: "VII",
+		title: "JVM & Memory",
+		subtitle: "GC, metaspace, tuning with evidence."
+	},
+	{
+		id: "exceptions",
+		roman: "VIII",
+		title: "Exceptions",
+		subtitle: "Checked, unchecked, Spring mapping."
+	},
+	{
+		id: "patterns",
+		roman: "IX",
+		title: "Patterns & SOLID",
+		subtitle: "What problem each one actually solves."
+	},
+	{
+		id: "spring",
+		roman: "X",
+		title: "Spring Core & Boot",
+		subtitle: "IoC, beans, auto-config, AOP."
+	},
+	{
+		id: "rest",
+		roman: "XI",
+		title: "REST & Validation",
+		subtitle: "HTTP semantics, DTOs, OpenAPI."
+	},
+	{
+		id: "jpa",
+		roman: "XII",
+		title: "JPA & Hibernate",
+		subtitle: "Transactions, N+1, locking."
+	},
+	{
+		id: "security",
+		roman: "XIII",
+		title: "Spring Security",
+		subtitle: "Authn vs authz, JWT, filters."
+	},
+	{
+		id: "micro",
+		roman: "XIV",
+		title: "Microservices",
+		subtitle: "Boundaries, resilience, consistency."
+	},
+	{
+		id: "kafka",
+		roman: "XV",
+		title: "Kafka",
+		subtitle: "Partitions, offsets, delivery."
+	},
+	{
+		id: "testing",
+		roman: "XVI",
+		title: "Testing",
+		subtitle: "JUnit 5, Mockito, Spring slices."
+	},
+	{
+		id: "sql",
+		roman: "XVII",
+		title: "SQL & PostgreSQL",
+		subtitle: "Joins, indexes, MVCC, JSONB."
+	},
+	{
+		id: "data",
+		roman: "XVIII",
+		title: "NoSQL & Cache",
+		subtitle: "Redis, Mongo, cache-aside."
+	},
+	{
+		id: "cloud",
+		roman: "XIX",
+		title: "AWS & Platform",
+		subtitle: "EC2, S3, Lambda, load balancers."
+	},
+	{
+		id: "adjacent",
+		roman: "XX",
+		title: "Feign, gRPC, GraphQL",
+		subtitle: "Clients, contracts, Quarkus."
+	}
+];
+var collectionTopics = [
+	{
+		id: "collections-overview",
+		chapterId: "collections",
+		title: "Collections map — pick by access pattern",
+		blurb: "List keeps order and duplicates. Set keeps uniqueness. Queue is about processing order. Map is key to value. Generics always. Synchronize only when you must.",
+		keywords: [
+			"List",
+			"Set",
+			"Queue",
+			"Map",
+			"Big-O"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "table",
+				headers: [
+					"List",
+					"Set",
+					"Map"
+				],
+				rows: [[
+					"Duplicates ok, ordered",
+					"Unique elements",
+					"Key-value, unique keys"
+				], [
+					"ArrayList, LinkedList",
+					"HashSet, LinkedHashSet, TreeSet",
+					"HashMap, LinkedHashMap, TreeMap"
+				]]
+			},
+			{
+				kind: "bullets",
+				title: "Cost instincts",
+				items: [
+					"ArrayList — random get O(1); insert/remove in the middle O(n) because of shifting. Default capacity 10, grows ~1.5×.",
+					"LinkedList — O(1) insert if you already hold the node; finding the index is O(n). Also a Deque.",
+					"HashSet — unique via HashMap under the hood (dummy values).",
+					"TreeSet / TreeMap — red-black tree, sorted, O(log n).",
+					"LinkedHashMap — insertion (or access) order. LRU cache via accessOrder=true + removeEldestEntry."
+				]
+			},
+			{
+				kind: "when",
+				text: "Need index and scan? ArrayList. Need unique + sort? TreeSet. Need unique + insert order? LinkedHashSet. Need queue? ArrayDeque beats Stack and LinkedList for most cases."
+			}
+		]
+	},
+	{
+		id: "arraylist-linkedlist",
+		chapterId: "collections",
+		title: "ArrayList vs LinkedList",
+		blurb: "Almost always ArrayList. LinkedList wins only when you already have the node and you insert/remove a lot at the ends or middle.",
+		keywords: [
+			"contiguous",
+			"node",
+			"cache locality"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "table",
+			headers: ["ArrayList", "LinkedList"],
+			rows: [
+				["Contiguous array, cache-friendly", "Nodes, pointer chasing"],
+				["Fast get/set by index", "Slow get by index"],
+				["Shift on middle insert", "Pointer rewrite if node is known"],
+				["List", "List + Deque"]
+			]
+		}, {
+			kind: "trap",
+			text: "People pick LinkedList for 'lots of inserts' and then insert by index, which is still O(n) to walk there. Measure. ArrayDeque for stack/queue."
+		}]
+	},
+	{
+		id: "comparable-comparator",
+		chapterId: "collections",
+		title: "Comparable vs Comparator",
+		blurb: "Comparable is the type's natural order. Comparator is an external strategy. You can have many comparators; you only get one compareTo.",
+		keywords: [
+			"compareTo",
+			"compare",
+			"natural order"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "table",
+			headers: ["Comparable", "Comparator"],
+			rows: [
+				["java.lang, compareTo", "java.util, compare"],
+				["Inside the class", "Outside; original class stays clean"],
+				["One natural sequence", "Many sequences (name, salary, date)"]
+			]
+		}, {
+			kind: "code",
+			caption: "Comparator, not Comparable — the cheatcode sample mixed the names",
+			code: `Comparator<Country> byName = (c1, c2) -> c1.name.compareTo(c2.name);
+Comparator<Country> byPop = Comparator.comparingInt(c -> c.population);
+list.sort(byName.thenComparing(byPop));`
+		}]
+	},
+	{
+		id: "hashmap-internals",
+		chapterId: "collections",
+		title: "HashMap internals",
+		blurb: "Array of buckets. hashCode finds a likely bin, equals confirms the key. Load factor 0.75, capacity 16. Java 8 treeifies long collision chains.",
+		keywords: [
+			"bucket",
+			"0.75",
+			"treeify 8",
+			"UNTREEIFY 6",
+			"resize"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "A HashMap is an array of bins. Each node holds hash, key, value, next. Index is a mix of the key's hash and table length (power of two, so hash & (n-1)). put inserts or replaces. When size > capacity × loadFactor, the table doubles and entries are redistributed."
+			},
+			{
+				kind: "bullets",
+				title: "Collision story",
+				items: [
+					"Pre-Java 8: linked list in the bin. Worst get is O(n).",
+					"Java 8+: if a bin's list is long (≥ 8) and the table is large enough (≥ 64), the bin becomes a red-black tree. Lookup trends toward O(log n).",
+					"If the table is still small, HashMap resizes instead of treeifying.",
+					"If a tree shrinks (≤ 6), it may untreeify back to a list."
+				]
+			},
+			{
+				kind: "why",
+				text: "Average get/put is O(1) if hashes spread. That is why you write hashCode carefully and why String/boxed keys work well."
+			},
+			{
+				kind: "trap",
+				text: "The number 8 is the treeify threshold, not the whole story. A tiny table with collisions resizes first. One null key is allowed; many null values. HashMap is not thread-safe — a concurrent resize can infinite-loop on old JDKs and lose updates on new ones. Structural change during fail-fast iteration → ConcurrentModificationException."
+			},
+			{
+				kind: "project",
+				text: "Request-scoped maps, caches that are not shared, grouping collectors. Shared mutable maps in a service go to ConcurrentHashMap or an explicit lock."
+			}
+		]
+	},
+	{
+		id: "concurrenthashmap",
+		chapterId: "collections",
+		title: "ConcurrentHashMap",
+		blurb: "The concurrent map. Java 8 uses CAS + bin locking, not the old segment table. No nulls. Iterators are weakly consistent.",
+		keywords: [
+			"CAS",
+			"bin lock",
+			"no null",
+			"computeIfAbsent"
+		],
+		source: "ultimate",
+		level: "deep",
+		blocks: [
+			{
+				kind: "idea",
+				text: "CHM is built for many threads. Reads are highly concurrent. Writes lock at bin granularity (and use CAS for uncontended inserts). Java 7 segments are exam trivia, not how modern CHM works."
+			},
+			{
+				kind: "why",
+				text: "You need a shared map without locking the entire table. computeIfAbsent, compute, merge are the atomic 'do this if absent' tools — they close the check-then-act race you get with get + put."
+			},
+			{
+				kind: "trap",
+				text: "No null keys or values — null would be ambiguous under concurrency (missing vs present-null). Iterators do not throw CME just because another thread writes; they may show some updates and miss others. That is weakly consistent, not 'fail-safe'."
+			}
+		]
+	},
+	{
+		id: "hashtable-hashset",
+		chapterId: "collections",
+		title: "Hashtable, HashSet, LinkedHashMap, TreeMap",
+		blurb: "Hashtable is the synchronized relic. HashSet is a HashMap with dummy values. Know order vs sort vs sync.",
+		keywords: [
+			"Hashtable",
+			"HashSet",
+			"LinkedHashMap",
+			"TreeMap"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "table",
+			headers: ["Hashtable", "HashMap"],
+			rows: [
+				["Synchronized, whole table", "Not synchronized"],
+				["No null key or value", "One null key, many null values"],
+				["Legacy", "Default map"]
+			]
+		}, {
+			kind: "bullets",
+			items: [
+				"HashSet stores keys of a HashMap. Uniqueness is equals/hashCode.",
+				"LinkedHashSet / LinkedHashMap keep insertion order.",
+				"TreeMap / TreeSet keep sorted order via Comparable/Comparator. Keys must be mutually comparable and consistent with equals if you also use them in hash structures.",
+				"IdentityHashMap uses ==. EnumMap is an array indexed by ordinal — use it for enum keys."
+			]
+		}]
+	},
+	{
+		id: "fail-fast",
+		chapterId: "collections",
+		title: "Fail-fast vs snapshot vs weakly consistent",
+		blurb: "'Fail-safe' is interview slang, not a JDK contract. Say the real words.",
+		keywords: [
+			"ConcurrentModificationException",
+			"modCount",
+			"snapshot",
+			"weakly consistent"
+		],
+		source: "merged",
+		level: "trap",
+		blocks: [{
+			kind: "table",
+			headers: [
+				"Style",
+				"Behaviour",
+				"Examples"
+			],
+			rows: [
+				[
+					"Fail-fast",
+					"modCount changes → CME",
+					"ArrayList, HashMap iterators"
+				],
+				[
+					"Snapshot",
+					"Iterator reads a frozen copy; later writes invisible",
+					"CopyOnWriteArrayList"
+				],
+				[
+					"Weakly consistent",
+					"No CME; may see some concurrent writes",
+					"ConcurrentHashMap"
+				]
+			]
+		}, {
+			kind: "trap",
+			text: "CopyOnWriteArrayList is great for rare writes / many reads (listener lists). Each write copies the array — do not use it as a general List."
+		}]
+	},
+	{
+		id: "queues",
+		chapterId: "collections",
+		title: "Queue, Deque, Stack, BlockingQueue",
+		blurb: "FIFO, double-ended, LIFO. BlockingQueue is the concurrency workhorse for producers and consumers.",
+		keywords: [
+			"FIFO",
+			"LIFO",
+			"ArrayDeque",
+			"BlockingQueue"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"Queue — FIFO. Offer/poll vs add/remove (exceptions).",
+				"Deque — both ends. ArrayDeque is the default.",
+				"Stack — LIFO. Prefer Deque over java.util.Stack (which extends Vector).",
+				"PriorityQueue — heap, not FIFO. Ordering via Comparator. Not thread-safe.",
+				"BlockingQueue — put/take can wait. ArrayBlockingQueue, LinkedBlockingQueue, DelayQueue, SynchronousQueue."
+			]
+		}, {
+			kind: "project",
+			text: "A worker pool: producers put jobs on a LinkedBlockingQueue, consumers take. Bounded queues + a rejection policy beat an unbounded queue that OOMs."
+		}]
+	}
+];
+var concurrencyTopics = [
+	{
+		id: "threads-basics",
+		chapterId: "concurrency",
+		title: "Process vs thread, lifecycle",
+		blurb: "A thread is an execution path inside a process. Threads share the heap; each has a stack. Lifecycle is a state machine, not a suggestion.",
+		keywords: [
+			"NEW",
+			"RUNNABLE",
+			"BLOCKED",
+			"WAITING",
+			"TIMED_WAITING",
+			"TERMINATED"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "table",
+				headers: ["Process", "Thread"],
+				rows: [
+					["Heavy, own address space", "Light, shares process memory"],
+					["Slow to create/kill", "Faster to create/kill"],
+					["Isolation", "Shared heap → races"]
+				]
+			},
+			{
+				kind: "idea",
+				text: "Every Java program starts with the main thread. Extra threads are either a Thread subclass or a Runnable/Callable handed to an executor. The scheduler, not you, picks who runs — behaviour is not portable timing."
+			},
+			{
+				kind: "bullets",
+				title: "States (Java)",
+				items: [
+					"NEW — constructed, not started.",
+					"RUNNABLE — runnable or actually running (JVM does not expose RUNNING).",
+					"BLOCKED — waiting to enter a synchronized monitor.",
+					"WAITING — wait() / join() / park() without timeout.",
+					"TIMED_WAITING — sleep, wait(t), join(t).",
+					"TERMINATED — run finished. You cannot restart it."
+				]
+			},
+			{
+				kind: "trap",
+				text: "thread.start() twice → IllegalThreadStateException. thread.run() does not start a thread — it runs on the caller. If you override start() and forget super.start(), run() never happens on a new thread."
+			}
+		]
+	},
+	{
+		id: "runnable-callable",
+		chapterId: "concurrency",
+		title: "Runnable vs Callable, start vs run",
+		blurb: "Runnable is fire-and-forget. Callable returns a value and may throw checked exceptions. Prefer implementing Runnable so you can still extend another class.",
+		keywords: [
+			"run",
+			"call",
+			"Future",
+			"start"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [{
+			kind: "table",
+			headers: [
+				"",
+				"Runnable",
+				"Callable<V>"
+			],
+			rows: [
+				[
+					"Method",
+					"void run()",
+					"V call() throws Exception"
+				],
+				[
+					"Result",
+					"none",
+					"Future<V>"
+				],
+				[
+					"Package",
+					"java.lang",
+					"java.util.concurrent"
+				]
+			]
+		}, {
+			kind: "why",
+			text: "ExecutorService.submit(callable) gives you a Future. That is how you join on a result without rolling your own thread list."
+		}]
+	},
+	{
+		id: "sync-wait-notify",
+		chapterId: "concurrency",
+		title: "synchronized, wait, notify",
+		blurb: "synchronized is an intrinsic lock plus a memory barrier. wait/notify are the condition variables on that same monitor.",
+		keywords: [
+			"monitor",
+			"mutual exclusion",
+			"visibility",
+			"wait",
+			"notify"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Each object has a monitor. synchronized(obj) lets only one thread into the critical section and makes writes visible to the next acquirer. Keep the section small. Always lock in a global order to avoid deadlock."
+			},
+			{
+				kind: "table",
+				headers: ["wait()", "sleep()"],
+				rows: [
+					["Instance method on Object", "Static on Thread"],
+					["Releases the monitor", "Keeps the lock"],
+					["Must be inside synchronized", "No such rule"],
+					["Woken by notify/notifyAll or timeout", "Woken by time or interrupt"]
+				]
+			},
+			{
+				kind: "bullets",
+				title: "Also know",
+				items: [
+					"yield — hint to the scheduler, no lock release, rarely useful.",
+					"join — wait for another thread to terminate.",
+					"Always wait() in a while (condition) loop — spurious wakeups are real.",
+					"notify wakes one; notifyAll wakes all. Prefer notifyAll unless you can prove only one waiter can proceed."
+				]
+			}
+		]
+	},
+	{
+		id: "deadlock",
+		chapterId: "concurrency",
+		title: "Deadlock, livelock, starvation",
+		blurb: "Deadlock: everyone holds something and waits for something else. Break it with lock ordering, tryLock, or fewer locks.",
+		keywords: [
+			"deadlock",
+			"livelock",
+			"starvation",
+			"lock order"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Four Coffman conditions: mutual exclusion, hold-and-wait, no preemption, circular wait. Remove any one. In Java interviews, lock ordering is the answer they want."
+			},
+			{
+				kind: "bullets",
+				items: [
+					"Avoid nested locks when you can.",
+					"Use tryLock with timeout.",
+					"Do not hold a lock while calling unknown/foreign code.",
+					"Starvation: a thread never gets the lock (unfairness, high priority others).",
+					"Livelock: threads keep yielding to each other and make no progress."
+				]
+			},
+			{
+				kind: "project",
+				text: "Transfer money: always lock accountMin(id) then accountMax(id). Never lock A then B on one path and B then A on another."
+			}
+		]
+	},
+	{
+		id: "executors",
+		chapterId: "concurrency",
+		title: "ExecutorService and thread pools",
+		blurb: "Do not new Thread per task. Size the pool, bound the queue, shut it down, and know the rejection policy.",
+		keywords: [
+			"fixed",
+			"cached",
+			"scheduled",
+			"rejection",
+			"shutdown"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "bullets",
+				items: [
+					"newFixedThreadPool(n) — n workers, unbounded LinkedBlockingQueue. Risk: queue grows forever.",
+					"newCachedThreadPool — 0-core, SynchronousQueue, creates threads as needed. Can explode under load.",
+					"newSingleThreadExecutor — ordered, one worker.",
+					"newScheduledThreadPool — delayed / periodic.",
+					"ThreadPoolExecutor(core, max, keepAlive, unit, queue, factory, handler) is the real constructor."
+				]
+			},
+			{
+				kind: "why",
+				text: "Reuse threads, cap concurrency, get Futures. Always shutdown() or shutdownNow() in application lifecycle (Spring: @PreDestroy or a managed TaskExecutor)."
+			},
+			{
+				kind: "trap",
+				text: "Unbounded queues mean max pool size is never reached (fixed pool with LinkedBlockingQueue). Cached pools can create thousands of threads. Rejection policies: Abort, CallerRuns, Discard, DiscardOldest — pick on purpose."
+			}
+		]
+	},
+	{
+		id: "completable-future",
+		chapterId: "concurrency",
+		title: "CompletableFuture",
+		blurb: "Compose async work without callback pyramids. Be explicit about which executor runs the next stage.",
+		keywords: [
+			"thenApply",
+			"thenCompose",
+			"allOf",
+			"exceptionally"
+		],
+		source: "ultimate",
+		level: "deep",
+		blocks: [
+			{
+				kind: "bullets",
+				items: [
+					"thenApply — map the value.",
+					"thenCompose — flatMap async.",
+					"thenAccept / thenRun — side effects.",
+					"thenCombine / allOf / anyOf — join independent work.",
+					"exceptionally / handle / whenComplete — recovery."
+				]
+			},
+			{
+				kind: "trap",
+				text: "thenApply uses the completing thread, which may be the common ForkJoinPool. Blocking I/O there starves everyone. Use thenApplyAsync(fn, myExecutor) for blocking stages."
+			},
+			{
+				kind: "project",
+				text: "Fan-out: fetch customer, fetch products, thenCombine into a page DTO. Timeout with orTimeout / completeOnTimeout in newer JDKs."
+			}
+		]
+	},
+	{
+		id: "advanced-concurrency",
+		chapterId: "concurrency",
+		title: "Locks, atomics, ThreadLocal, Fork/Join",
+		blurb: "ReentrantLock for tryLock and fairness. ReadWriteLock when reads dominate. Atomics for single variables. ThreadLocal must be removed on pooled threads.",
+		keywords: [
+			"ReentrantLock",
+			"ReadWriteLock",
+			"CAS",
+			"ThreadLocal",
+			"ForkJoin"
+		],
+		source: "ultimate",
+		level: "deep",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"ReentrantLock — lockInterruptibly, tryLock, fair option, multiple conditions.",
+				"ReadWriteLock — many readers or one writer.",
+				"AtomicInteger / LongAdder — CAS, no blocking. LongAdder better under high write contention.",
+				"ForkJoinPool + RecursiveTask — CPU-bound divide and conquer. The common pool is what parallel streams use.",
+				"ThreadLocal — per-thread value. In Tomcat/worker pools, always remove() in a finally, or the next request inherits MDC/user."
+			]
+		}, {
+			kind: "trap",
+			text: "A ThreadLocal leak is a classloader leak in many app servers. Memory goes up after each hot reload. Clean it."
+		}]
+	},
+	{
+		id: "jmm-volatile",
+		chapterId: "concurrency",
+		title: "volatile, happens-before, JMM",
+		blurb: "Filled gap. volatile is visibility and ordering, not atomicity of ++. synchronized gives both exclusion and visibility.",
+		keywords: [
+			"volatile",
+			"happens-before",
+			"visibility",
+			"atomic"
+		],
+		source: "filled",
+		level: "trap",
+		blocks: [
+			{
+				kind: "idea",
+				text: "The Java Memory Model says when a write in thread A is visible to thread B. A happens-before B if, among other things: unlock happens-before later lock on the same monitor; write to volatile happens-before later read of that volatile; start happens-before the thread body; the body happens-before join returns."
+			},
+			{
+				kind: "why",
+				text: "Without this, a thread can spin forever on a cached 'running = true'. volatile boolean running is the stop-flag pattern."
+			},
+			{
+				kind: "trap",
+				text: "volatile int n; n++ is still a race — read, add, write. Use AtomicInteger. Double-checked locking for singletons needs volatile on the instance field."
+			}
+		]
+	},
+	{
+		id: "synchronizers",
+		chapterId: "concurrency",
+		title: "CountDownLatch, CyclicBarrier, Semaphore, Phaser",
+		blurb: "Filled gap. Latch is one-shot. Barrier resets. Semaphore is permits. These show up in 'coordinate N workers' questions.",
+		keywords: [
+			"CountDownLatch",
+			"CyclicBarrier",
+			"Semaphore",
+			"Phaser"
+		],
+		source: "filled",
+		level: "deep",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"CountDownLatch(n) — wait until n countDowns. Cannot reset.",
+				"CyclicBarrier(n) — n threads wait for each other, then continue, reusable.",
+				"Semaphore(n) — n permits. Good as a simple bulkhead around a scarce resource.",
+				"Phaser — dynamic party count, multi-phase."
+			]
+		}, {
+			kind: "project",
+			text: "Start a test only after 8 stub servers are up: latch. Limit 20 concurrent downstream calls: semaphore around the WebClient call."
+		}]
+	},
+	{
+		id: "daemon-priority",
+		chapterId: "concurrency",
+		title: "Daemon threads and priority",
+		blurb: "Daemon threads die when the last user thread dies. Priority is 1–10 and is a hint, not a promise.",
+		keywords: [
+			"daemon",
+			"priority",
+			"JVM exit"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "idea",
+			text: "GC is a daemon. Your thread pool workers usually should not be daemons in a server — the JVM would exit under the HTTP layer if main returns. In a CLI, daemon helpers are fine."
+		}, {
+			kind: "trap",
+			text: "Priority is not portable. Never use it to fix a race."
+		}]
+	}
+];
+var jvmTopics = [
+	{
+		id: "jvm-architecture",
+		chapterId: "jvm",
+		title: "JDK, JRE, JVM, class loading",
+		blurb: "javac writes bytecode. The JVM loads, verifies, interprets, and JIT-compiles it. JDK = JRE + tools.",
+		keywords: [
+			"bytecode",
+			"classloader",
+			"JIT",
+			"interpreter",
+			"JRE"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Source .java → javac → .class bytecode → class loader → bytecode verifier → interpreter + JIT → runtime. WORA is this pipeline."
+			},
+			{
+				kind: "bullets",
+				title: "JDK vs JRE vs JVM",
+				items: [
+					"JDK — compiler, javadoc, jar, jlink, plus the JRE.",
+					"JRE — JVM + core libs, enough to run.",
+					"JVM — executes bytecode."
+				]
+			},
+			{
+				kind: "bullets",
+				title: "Runtime data areas",
+				items: [
+					"Heap — objects.",
+					"Per-thread Java stacks — frames, locals, return addresses.",
+					"PC register per thread.",
+					"Metaspace (native) — class metadata. Replaced PermGen in Java 8.",
+					"Code cache — JIT compiled native code."
+				]
+			},
+			{
+				kind: "idea",
+				text: "Class loaders: bootstrap (rt / java.base) → platform → application. Delegation is parent-first by default. A class is defined by its name plus its loader — that is how container isolation works."
+			}
+		]
+	},
+	{
+		id: "memory-layout",
+		chapterId: "jvm",
+		title: "Where things live",
+		blurb: "Locals and refs on the stack. Objects on the heap. static on the class (metaspace + heap for the static fields' objects). String pool on the heap.",
+		keywords: [
+			"stack",
+			"heap",
+			"metaspace",
+			"string pool",
+			"frame"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"Method call → new stack frame. Return → frame popped.",
+				"Local primitives and references live in the frame.",
+				"Objects (and their instance fields) live on the heap.",
+				"static data is per-class, not per-instance.",
+				"String literals are interned in the heap pool."
+			]
+		}, {
+			kind: "trap",
+			text: "A stack overflow is too-deep recursion or a giant local array. An OutOfMemoryError: Java heap space is the object graph. OutOfMemoryError: Metaspace is classloader leaks (often undeployed apps + static caches)."
+		}]
+	},
+	{
+		id: "gc",
+		chapterId: "jvm",
+		title: "Garbage collection",
+		blurb: "Objects die when unreachable from GC roots. Generational heaps: young (Eden + survivors) and old. Collectors are a latency vs throughput choice.",
+		keywords: [
+			"Eden",
+			"Survivor",
+			"Old",
+			"G1",
+			"ZGC",
+			"roots"
+		],
+		source: "merged",
+		level: "deep",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Roots: stack refs, static fields, JNI. Unreachable objects are collectable. Young objects die in minor collections. Long-lived objects are promoted. Major/full collection vocabulary depends on the collector."
+			},
+			{
+				kind: "bullets",
+				title: "Collectors",
+				items: [
+					"Serial — single thread, small heaps, client.",
+					"Parallel — throughput, batch.",
+					"G1 — default on modern JDKs, region-based, predictable pauses.",
+					"ZGC / Shenandoah — ultra-low pause, large heaps.",
+					"Pick from latency, throughput, heap size, not from blog habit."
+				]
+			},
+			{
+				kind: "idea",
+				text: "System.gc() is a hint. Do not call it in a tight loop. finalize() is deprecated; use Cleaner or try-with-resources."
+			}
+		]
+	},
+	{
+		id: "jvm-tuning",
+		chapterId: "jvm",
+		title: "Tuning workflow",
+		blurb: "Measure, identify the bottleneck, inspect artifacts, change one thing, re-test. Flags without evidence are theatre.",
+		keywords: [
+			"-Xmx",
+			"G1",
+			"JFR",
+			"allocation rate"
+		],
+		source: "ultimate",
+		level: "deep",
+		blocks: [{
+			kind: "bullets",
+			title: "Order",
+			items: [
+				"Measure latency, throughput, CPU, allocation rate, pause times.",
+				"Is it CPU, memory, I/O, locks, or the database?",
+				"GC logs, thread dumps, heap dumps, JFR.",
+				"Tune one knob.",
+				"Re-test under realistic load."
+			]
+		}, {
+			kind: "bullets",
+			title: "Tools",
+			items: [
+				"-Xms / -Xmx, -XX:+UseG1GC",
+				"JFR + Java Mission Control",
+				"jcmd, jstack, jmap",
+				"JVisualVM, async-profiler, JProfiler",
+				"Eclipse MAT for retained set",
+				"JMH for microbenchmarks — and you will write them wrong the first time."
+			]
+		}]
+	},
+	{
+		id: "references",
+		chapterId: "jvm",
+		title: "Strong, soft, weak, phantom",
+		blurb: "Filled gap. WeakHashMap keys vanish when only weakly reachable. Soft is for caches that should yield under memory pressure. Phantom is for cleanup after finalize's era.",
+		keywords: [
+			"WeakReference",
+			"SoftReference",
+			"PhantomReference",
+			"WeakHashMap"
+		],
+		source: "filled",
+		level: "deep",
+		blocks: [{
+			kind: "idea",
+			text: "Strong — ordinary field. Soft — collected when the heap is desperate (used for image caches). Weak — collected at next GC once only weakly reachable (canonical maps, listeners). Phantom — enqueued after the object is phantom-reachable, used with a ReferenceQueue for post-mortem cleanup."
+		}, {
+			kind: "trap",
+			text: "WeakHashMap is identity-ish on keys and does not magically make values weak. If the value points back to the key, you leak."
+		}]
+	}
+];
+var extraTopics = [
+	{
+		id: "maven-pom",
+		chapterId: "spring",
+		title: "Maven POM, logging",
+		blurb: "pom.xml is the build contract. Logging is a ring buffer of truth — structured, leveled, never a substitute for metrics.",
+		keywords: [
+			"pom.xml",
+			"SLF4J",
+			"logback",
+			"MDC"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "idea",
+			text: "The POM lists coordinates, dependencies, plugins, modules. Spring Boot's parent BOM manages versions so you usually omit them. Logging: SLF4J API + Logback. Put a correlation id in MDC at the filter, include it in the pattern."
+		}, {
+			kind: "trap",
+			text: "System.out.println is not logging. Logging stack traces to the HTTP response is not logging either."
+		}]
+	},
+	{
+		id: "pagination-idempotency",
+		chapterId: "rest",
+		title: "Pagination and idempotency keys",
+		blurb: "Filled gap. Offset pagination is simple and slow at deep pages. Cursor/keyset pagination is stable. POSTs that charge money need an Idempotency-Key.",
+		keywords: [
+			"offset",
+			"cursor",
+			"Idempotency-Key"
+		],
+		source: "filled",
+		level: "deep",
+		blocks: [{
+			kind: "idea",
+			text: "page+size uses OFFSET. Rows shift as inserts happen, and the database still walks the offset. Keyset: WHERE (created_at, id) < (:cursor) ORDER BY created_at DESC, id DESC LIMIT n. Return nextCursor."
+		}, {
+			kind: "idea",
+			text: "Idempotency-Key header on POST /payments. Persist the key + response. Replay returns the same 201. Combine with PUT-like resource ids when you can."
+		}]
+	},
+	{
+		id: "docker-k8s",
+		chapterId: "cloud",
+		title: "Containers, probes, 12-factor",
+		blurb: "Filled gap. A container is a process with a filesystem. Kubernetes restarts it. Probes tell it when to.",
+		keywords: [
+			"liveness",
+			"readiness",
+			"startupProbe",
+			"12-factor"
+		],
+		source: "filled",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"liveness — restart me, I am wedged. Do not point it at the DB.",
+				"readiness — stop sending traffic, I am warming or overloaded.",
+				"startupProbe — slow boots (JVM) should not get killed by liveness.",
+				"12-factor: config in env, logs to stdout, disposability, backing services as attached resources."
+			]
+		}, {
+			kind: "trap",
+			text: "A liveness check that hits Postgres will restart healthy pods during a DB blip, making the outage worse."
+		}]
+	},
+	{
+		id: "hashmap-java8-note",
+		chapterId: "collections",
+		title: "equals, hashCode, and maps as keys",
+		blurb: "The other HashMap interview: what makes a good key, and why custom objects surprise people.",
+		keywords: [
+			"key",
+			"immutable",
+			"hash spread"
+		],
+		source: "filled",
+		level: "trap",
+		blocks: [{
+			kind: "idea",
+			text: "A good key is immutable, with a well-distributed hashCode consistent with equals. Enums and strings are easy. Mutable beans are not. Putting an entity into a HashSet then changing its id is how rows 'disappear'."
+		}, {
+			kind: "project",
+			text: "Cache keys: a record of (tenantId, userId), not a concatenated string you have to parse later."
+		}]
+	}
+];
+var javaFeatureTopics = [
+	{
+		id: "java8-features",
+		chapterId: "java8",
+		title: "Java 8 — what actually changed",
+		blurb: "Lambdas, streams, Optional, default/static on interfaces, functional interfaces, method references. Less boilerplate, more declarative data work, a path to parallel.",
+		keywords: [
+			"lambda",
+			"stream",
+			"Optional",
+			"default method",
+			"functional interface"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "bullets",
+				title: "The set you should recite",
+				items: [
+					"Lambda expressions",
+					"Stream API",
+					"Default and static methods on interfaces",
+					"Functional interfaces + @FunctionalInterface",
+					"Optional",
+					"Method references",
+					"New Date/Time (JSR-310)"
+				]
+			},
+			{
+				kind: "why",
+				text: "Compact code, easier unit tests around pure functions, and a standard way to pipeline collections. Parallel is a bonus, not the default."
+			},
+			{
+				kind: "trap",
+				text: "parallelStream() is not a performance free lunch. Measure. Shared mutable state inside a lambda is a race."
+			}
+		]
+	},
+	{
+		id: "lambda",
+		chapterId: "java8",
+		title: "Lambda expressions",
+		blurb: "An anonymous function: parameters, arrow, body. It implements the single abstract method of a functional interface.",
+		keywords: [
+			"arrow",
+			"SAM",
+			"capture",
+			"effectively final"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "A lambda is a value. It needs a target type — a functional interface. You do not re-declare the method; you provide the body."
+			},
+			{
+				kind: "code",
+				caption: "From a named method to a lambda",
+				code: `BiConsumer<Integer, Integer> add = (a, b) -> System.out.println(a + b);
+add.accept(5, 8);
+
+Predicate<Integer> gt5 = x -> x > 5;`
+			},
+			{
+				kind: "bullets",
+				title: "Built-in functional types",
+				items: [
+					"Predicate<T> — T → boolean, used in filter",
+					"Function<T,R> — T → R, used in map",
+					"Consumer<T> — T → void",
+					"Supplier<T> — () → T",
+					"BiConsumer / BiFunction / UnaryOperator / BinaryOperator"
+				]
+			},
+			{
+				kind: "trap",
+				text: "Lambdas capture local variables only if they are final or effectively final. You cannot mutate a captured int count++. Use AtomicInteger or a stream reduction instead."
+			}
+		]
+	},
+	{
+		id: "functional-interface",
+		chapterId: "java8",
+		title: "Functional interfaces",
+		blurb: "Exactly one abstract method. Default and static methods do not count against that. The lambda is the implementation.",
+		keywords: [
+			"SAM",
+			"@FunctionalInterface",
+			"Runnable",
+			"Comparator"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Functional interface = one abstract method. Runnable, Callable, Comparator, Comparable all qualify. @FunctionalInterface asks the compiler to enforce it."
+			},
+			{
+				kind: "code",
+				caption: "Roll your own",
+				code: `@FunctionalInterface
+public interface MyFunction {
+    void myMethod(String input);
+}
+
+MyFunction fn = input -> System.out.println("Input: " + input);
+fn.myMethod("Hello, Lambda!");`
+			},
+			{
+				kind: "why",
+				text: "Without a SAM type there is nowhere to hang the lambda. That is the whole relationship."
+			}
+		]
+	},
+	{
+		id: "method-reference",
+		chapterId: "java8",
+		title: "Method references",
+		blurb: "When a lambda only forwards to an existing method, write Class::method. Four shapes: static, instance-on-type, instance-on-object, constructor.",
+		keywords: [
+			"::",
+			"bound",
+			"unbound",
+			"constructor ref"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "idea",
+			text: "names.forEach(System.out::println) is names.forEach(s -> System.out.println(s)). Use it when the method already exists — do not invent a wrapper."
+		}, {
+			kind: "bullets",
+			items: [
+				"Static — String::valueOf",
+				"Instance on an object — System.out::println",
+				"Instance on a type — String::toLowerCase",
+				"Constructor — ArrayList::new"
+			]
+		}]
+	},
+	{
+		id: "streams",
+		chapterId: "java8",
+		title: "Stream API",
+		blurb: "A pipeline over a source. Intermediate ops are lazy. A terminal op pulls the data. The source collection is not mutated.",
+		keywords: [
+			"lazy",
+			"intermediate",
+			"terminal",
+			"pipeline",
+			"spliterator"
+		],
+		source: "merged",
+		level: "core",
+		drillId: "stream-filter-map",
+		blocks: [
+			{
+				kind: "idea",
+				text: "A stream is not a data structure. It describes a computation: source → zero or more intermediate ops → one terminal op. Intermediate ops (map, filter, sorted, flatMap, distinct, peek) build a recipe. Terminal ops (collect, forEach, reduce, count, findFirst, min, max) run it."
+			},
+			{
+				kind: "code",
+				caption: "map / filter / sorted / collect",
+				code: `List<Integer> squares = numbers.stream()
+    .map(x -> x * x)
+    .collect(Collectors.toList());
+
+List<String> sNames = names.stream()
+    .filter(s -> s.startsWith("S"))
+    .sorted()
+    .collect(Collectors.toList());`
+			},
+			{
+				kind: "code",
+				caption: "reduce — even sum",
+				code: `int evenSum = numbers.stream()
+    .filter(x -> x % 2 == 0)
+    .reduce(0, (acc, i) -> acc + i);`
+			},
+			{
+				kind: "trap",
+				text: "You cannot reuse a stream after a terminal op. peek is for debugging, not business logic. Don't use parallelStream on a tiny list or a blocking I/O body."
+			}
+		]
+	},
+	{
+		id: "map-flatmap",
+		chapterId: "java8",
+		title: "map vs flatMap",
+		blurb: "map is one-to-one. flatMap is one-to-many and then flattens. Nested lists, Optional, and Stream-of-Stream are the usual reasons.",
+		keywords: [
+			"one-to-one",
+			"one-to-many",
+			"flatten"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "table",
+				headers: [
+					"",
+					"map",
+					"flatMap"
+				],
+				rows: [
+					[
+						"Shape",
+						"T → R",
+						"T → Stream<R> (then flatten)"
+					],
+					[
+						"Result",
+						"Stream<R>",
+						"Stream<R> not Stream<Stream<R>>"
+					],
+					[
+						"Use",
+						"transform each element",
+						"explode nested structures"
+					]
+				]
+			},
+			{
+				kind: "code",
+				caption: "flatten a character",
+				code: `fruits.stream()
+    .flatMap(str -> Stream.of(str.charAt(2)))
+    .forEach(System.out::println);`
+			},
+			{
+				kind: "project",
+				text: "orders.stream().flatMap(o -> o.getLines().stream()) to get every line item. Optional.flatMap when a lookup returns Optional."
+			}
+		]
+	},
+	{
+		id: "optional",
+		chapterId: "java8",
+		title: "Optional",
+		blurb: "A box that may be empty. Return it from methods that might miss. Do not use it as a field, a parameter, or a serialized DTO.",
+		keywords: [
+			"isPresent",
+			"orElse",
+			"orElseGet",
+			"orElseThrow"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Optional is a container for a possibly missing value so you stop returning null from finders. Prefer map/flatMap/filter chaining over isPresent()+get()."
+			},
+			{
+				kind: "bullets",
+				title: "Method instincts",
+				items: [
+					"orElse(x) — x is always evaluated.",
+					"orElseGet(supplier) — lazy fallback. Use this when fallback is expensive.",
+					"orElseThrow — the honest miss.",
+					"ifPresent / ifPresentOrElse — side effects.",
+					"empty / of / ofNullable — of(null) throws."
+				]
+			},
+			{
+				kind: "trap",
+				text: "Optional.get() without a guard is just a louder NPE. Optional in entity fields breaks JPA and JSON. Optional.of(null) is a bug; ofNullable exists."
+			}
+		]
+	},
+	{
+		id: "default-methods",
+		chapterId: "java8",
+		title: "Default and static methods on interfaces",
+		blurb: "Default methods let an interface evolve without breaking implementors. Static methods on interfaces are namespaced utilities — they are not inherited as overridable instance methods.",
+		keywords: [
+			"default",
+			"static interface",
+			"diamond",
+			"backward compatible"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "code",
+				caption: "default method",
+				code: `default void methodName() {
+    // fallback body
+}`
+			},
+			{
+				kind: "why",
+				text: "Java 8 needed to add forEach/stream to Collection without rewriting every ArrayList in the world. Default methods are that evolution hatch."
+			},
+			{
+				kind: "idea",
+				text: "Diamond problem: two interfaces, same default signature. The class must override and pick, often via InterfaceName.super.method(). Static interface methods are called as Interface.method() — implementing classes cannot override them."
+			},
+			{
+				kind: "project",
+				text: "A repository interface can carry a default findActive() that delegates to findAll + filter if you truly want it — but prefer a real query method."
+			}
+		]
+	},
+	{
+		id: "datetime",
+		chapterId: "java8",
+		title: "Date and Time API",
+		blurb: "java.time is immutable and thread-safe. Stop using Date and Calendar in new code.",
+		keywords: [
+			"LocalDate",
+			"Instant",
+			"ZonedDateTime",
+			"Duration",
+			"Period"
+		],
+		source: "ultimate",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"LocalDate / LocalTime / LocalDateTime — no zone.",
+				"ZonedDateTime / OffsetDateTime — with zone or offset.",
+				"Instant — a point on the timeline (UTC).",
+				"Duration — time-based amount. Period — date-based amount.",
+				"DateTimeFormatter — not SimpleDateFormat (which is not thread-safe)."
+			]
+		}, {
+			kind: "trap",
+			text: "LocalDateTime.now() without a zone is a bug in distributed systems. Store Instant in the DB, present ZonedDateTime to humans."
+		}]
+	},
+	{
+		id: "records",
+		chapterId: "modern",
+		title: "Records",
+		blurb: "Concise immutable data carriers. Generated constructor, accessors, equals, hashCode, toString. Great DTOs. Nested mutability still leaks.",
+		keywords: [
+			"record",
+			"accessor",
+			"canonical constructor"
+		],
+		source: "ultimate",
+		level: "core",
+		blocks: [
+			{
+				kind: "code",
+				code: `public record UserDto(Long id, String name) {}`
+			},
+			{
+				kind: "idea",
+				text: "Components are final. You can compact-construct to validate. You can add methods. You cannot add extra instance fields. Records can implement interfaces; they cannot extend a class."
+			},
+			{
+				kind: "trap",
+				text: "A record of a mutable List is a shallow freeze. Callers can still mutate the list. Copy it in the constructor if you need real immutability."
+			}
+		]
+	},
+	{
+		id: "sealed",
+		chapterId: "modern",
+		title: "Sealed classes",
+		blurb: "Close the type hierarchy. Permitted subtypes must be final, sealed, or non-sealed. Pairs beautifully with pattern matching.",
+		keywords: [
+			"sealed",
+			"permits",
+			"non-sealed"
+		],
+		source: "ultimate",
+		level: "core",
+		blocks: [{
+			kind: "code",
+			code: `public sealed interface Payment permits CardPayment, CashPayment {}`
+		}, {
+			kind: "why",
+			text: "Domain events, payment kinds, result types — you want the compiler to know the full set so switch is exhaustive."
+		}]
+	},
+	{
+		id: "pattern-matching",
+		chapterId: "modern",
+		title: "Pattern matching & sequenced collections",
+		blurb: "instanceof and switch can bind. Java 21 finalizes record patterns and adds SequencedCollection.",
+		keywords: [
+			"instanceof",
+			"switch",
+			"record pattern",
+			"getFirst"
+		],
+		source: "ultimate",
+		level: "core",
+		blocks: [{
+			kind: "idea",
+			text: "if (obj instanceof String s) uses s without a cast. switch on type + record deconstruction is the Java 21 shape. SequencedCollection / SequencedSet / SequencedMap add getFirst, getLast, addFirst, addLast, reversed."
+		}, {
+			kind: "margin",
+			text: "var is for locals when the type is obvious. Not for public APIs."
+		}]
+	},
+	{
+		id: "virtual-threads",
+		chapterId: "modern",
+		title: "Virtual threads (Java 21)",
+		blurb: "JVM-scheduled lightweight threads. They make blocking thread-per-request scale. They do not make CPU-bound work faster.",
+		keywords: [
+			"virtual thread",
+			"pinning",
+			"carrier",
+			"structured concurrency"
+		],
+		source: "ultimate",
+		level: "deep",
+		blocks: [
+			{
+				kind: "code",
+				code: `try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+    Future<String> result = executor.submit(() -> "done");
+}`
+			},
+			{
+				kind: "idea",
+				text: "A virtual thread maps onto a carrier platform thread. Blocking on Java-level I/O unmounts it. That is the point: millions of waiting requests without millions of OS stacks."
+			},
+			{
+				kind: "trap",
+				text: "Do not claim virtual threads speed up CPU-bound work. Avoid pinning: long synchronized blocks and some native calls keep the carrier stuck. Connection pools still have a size — virtual threads do not invent more database connections. Always bound the pool."
+			},
+			{
+				kind: "project",
+				text: "A Spring Boot 3.2+ Tomcat with virtual threads is a reasonable default for I/O-heavy REST. Measure pinning with JFR."
+			}
+		]
+	},
+	{
+		id: "string-immutability",
+		chapterId: "strings",
+		title: "String, StringBuilder, intern",
+		blurb: "String is immutable and interned. StringBuilder is the mutable workhorse. StringBuffer is the synchronized older sibling — rarely what you want.",
+		keywords: [
+			"immutable",
+			"intern",
+			"pool",
+			"StringBuilder"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "table",
+				headers: [
+					"String",
+					"StringBuffer",
+					"StringBuilder"
+				],
+				rows: [
+					[
+						"Immutable",
+						"Mutable, synchronized",
+						"Mutable, not synchronized"
+					],
+					[
+						"Safe to share",
+						"Thread-safe, slower",
+						"Fast, single-thread"
+					],
+					[
+						"+ in a loop is a trap",
+						"Legacy concurrent building",
+						"Default choice for building"
+					]
+				]
+			},
+			{
+				kind: "idea",
+				text: "Immutability: once created, the char data does not change. That makes String hashable, cacheable, and safe as a map key. Literals live in the string pool (heap, interned). new String(\"a\") makes an extra object — almost never needed."
+			},
+			{
+				kind: "why",
+				text: "The flyweight pool means many references can share one \"OK\" literal. Security also: a String handed to a class loader or a network library cannot be mutated under its feet."
+			},
+			{
+				kind: "trap",
+				text: "Use equals, never ==, for content. Repeated + inside a hot loop creates garbage; use StringBuilder. intern() on huge unique strings can bloat the pool."
+			}
+		]
+	},
+	{
+		id: "immutable-class",
+		chapterId: "strings",
+		title: "Writing an immutable class",
+		blurb: "final class, private final fields, constructor init, no setters, defensive copies of mutable inputs and outputs.",
+		keywords: [
+			"final class",
+			"defensive copy",
+			"no setters"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "code",
+			code: `public final class ImmutableClass {
+    private final int value;
+    public ImmutableClass(int value) { this.value = value; }
+    public int getValue() { return value; }
+}`
+		}, {
+			kind: "bullets",
+			items: [
+				"Declare the class final (or seal it).",
+				"Fields private + final.",
+				"If a field is a List/Date, copy on the way in and the way out.",
+				"No setters. Methods return new instances if they 'change' anything."
+			]
+		}]
+	},
+	{
+		id: "shallow-deep",
+		chapterId: "strings",
+		title: "Shallow copy vs deep copy",
+		blurb: "Shallow copies fields; nested objects stay shared. Deep copy clones the graph. Prefer explicit mapping over clone().",
+		keywords: [
+			"shallow",
+			"deep",
+			"clone",
+			"shared reference"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [{
+			kind: "idea",
+			text: "Shallow: new object, same inner pointers. Mutating a nested Address changes both copies. Deep: recursively new nested objects. Changes do not leak."
+		}, {
+			kind: "when",
+			text: "Shallow is fine for immutable graphs. Deep is required when you hand an entity snapshot to another thread or a cache."
+		}]
+	}
+];
+var oopTopics = [
+	{
+		id: "what-is-java",
+		chapterId: "oop",
+		title: "Java, class, object",
+		blurb: "Java is a class-based OOP language. A class is the blueprint. An object is a living instance with state and behaviour.",
+		keywords: [
+			"class",
+			"object",
+			"state",
+			"behaviour",
+			"blueprint",
+			"WORA"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Java is object-oriented: we model the world as types. A class describes fields and methods. An object is a real instance of that type, sitting on the heap, with its own state."
+			},
+			{
+				kind: "why",
+				text: "Interviewers start here to see if you speak in types, not just syntax. Class vs object is the root of every later topic — inheritance, equals, serialization, Spring beans."
+			},
+			{
+				kind: "when",
+				text: "Use a class when you have identity + behaviour. Use a record/DTO when you only carry data. Do not invent a class for a function that should be a static utility or a lambda."
+			},
+			{
+				kind: "tradeoff",
+				text: "Everything-is-an-object can become ceremony. Primitive types still exist for a reason. Over-modelling simple data as deep class hierarchies is how codebases rot."
+			},
+			{
+				kind: "project",
+				text: "In a payments service, Payment is a class with identity (id, status). Money is better as an immutable value — amount + currency — not a mutable bag of fields."
+			},
+			{
+				kind: "margin",
+				text: "WORA: bytecode, then JVM. Not magic."
+			}
+		]
+	},
+	{
+		id: "inheritance",
+		chapterId: "oop",
+		title: "Inheritance",
+		blurb: "A subclass reuses and specialises a superclass. Java allows single class inheritance. Prefer composition when the relationship is not a true is-a.",
+		keywords: [
+			"is-a",
+			"extends",
+			"reuse",
+			"overriding",
+			"single inheritance"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Inheritance lets a subclass acquire fields and methods of a superclass. Uses: reuse, and a hook for runtime polymorphism via overriding. Types people list: single, multilevel, hierarchical, hybrid. Multiple class inheritance is not supported — interfaces cover that."
+			},
+			{
+				kind: "bullets",
+				title: "When it is justified",
+				items: [
+					"True is-a relationship that will not rot.",
+					"You need to override behaviour, not just copy fields.",
+					"The superclass is stable and small."
+				]
+			},
+			{
+				kind: "why",
+				text: "Without inheritance you cannot explain method overriding, protected, or why Spring proxies subclass your @Transactional service."
+			},
+			{
+				kind: "tradeoff",
+				text: "Inheritance couples you to the parent forever. Fragile base class: a parent change breaks children. Prefer composition (has-a) plus interfaces when you only wanted reuse."
+			},
+			{
+				kind: "trap",
+				text: "Do not use inheritance just to share a couple of utility methods. That is not an is-a. Extract a collaborator."
+			},
+			{
+				kind: "project",
+				text: "CardPayment extends Payment is fine. UserService extends Utils is not."
+			}
+		]
+	},
+	{
+		id: "polymorphism",
+		chapterId: "oop",
+		title: "Polymorphism, overloading, overriding",
+		blurb: "One name, many forms. Overloading is compile-time. Overriding is runtime. Binding follows that split.",
+		keywords: [
+			"overloading",
+			"overriding",
+			"compile-time",
+			"runtime",
+			"signature"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Polymorphism: the same message, different behaviour. Java gives you overloading (same name, different parameters) and overriding (same signature, subclass implementation)."
+			},
+			{
+				kind: "table",
+				caption: "Overloading vs overriding",
+				headers: [
+					"",
+					"Overloading",
+					"Overriding"
+				],
+				rows: [
+					[
+						"What",
+						"Same name, different params",
+						"Same signature, subclass body"
+					],
+					[
+						"When bound",
+						"Compile time",
+						"Runtime, on the actual object"
+					],
+					[
+						"Inheritance",
+						"Not required",
+						"Requires is-a"
+					],
+					[
+						"Return type",
+						"May differ",
+						"Covariant return allowed"
+					],
+					[
+						"Access",
+						"Independent",
+						"Cannot be more restrictive"
+					],
+					[
+						"Exceptions",
+						"Independent",
+						"Checked exceptions cannot widen"
+					]
+				]
+			},
+			{
+				kind: "table",
+				caption: "Static vs dynamic binding",
+				headers: ["Static (early)", "Dynamic (late)"],
+				rows: [
+					["Resolved at compile time", "Resolved at runtime"],
+					["Uses the reference type", "Uses the object type"],
+					["Overloading, private, final, static", "Overridable instance methods"]
+				]
+			},
+			{
+				kind: "trap",
+				text: "Static methods are hidden, not overridden. Calling Super.foo() vs Sub.foo() depends on the reference type. Same trap for private methods — they never participate in overriding."
+			},
+			{
+				kind: "project",
+				text: "PaymentProcessor.process(Payment p) dispatches on the runtime type if process is overridden on CardPayment / UpiPayment. That is strategy-shaped polymorphism, often cleaner as a Strategy interface."
+			}
+		]
+	},
+	{
+		id: "encapsulation",
+		chapterId: "oop",
+		title: "Encapsulation",
+		blurb: "Wrap state with the operations that protect it. Getters are not encapsulation if they leak a mutable list.",
+		keywords: [
+			"data hiding",
+			"invariants",
+			"getters",
+			"immutability"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Encapsulation puts data and the rules that keep it valid in one unit. Private fields, controlled mutators, invariants enforced in the constructor. The point is not 'make getters' — it is 'nobody else can break the object'."
+			},
+			{
+				kind: "why",
+				text: "Lets you change representation later, unit-test the rules in one place, and build immutable types."
+			},
+			{
+				kind: "trap",
+				text: "Returning the internal ArrayList from getItems() is not encapsulation. Return an unmodifiable copy, or don't expose it."
+			},
+			{
+				kind: "project",
+				text: "Account.debit() checks balance and status. Callers never set balance = -1 from a DTO mapper."
+			}
+		]
+	},
+	{
+		id: "abstract-vs-interface",
+		chapterId: "oop",
+		title: "Abstract class vs interface",
+		blurb: "Partial vs full contract. After Java 8, interfaces can carry default and static methods, so the old 'interfaces have no code' line is stale.",
+		keywords: [
+			"abstract",
+			"interface",
+			"default method",
+			"multiple inheritance"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "table",
+				headers: ["Abstract class", "Interface"],
+				rows: [
+					["Partial abstraction — can have state", "Contract. Java 8+: default/static methods"],
+					["Single inheritance (extends)", "Multiple (implements)"],
+					["Any access modifier on members", "Abstract methods public; fields public static final"],
+					["Constructors exist", "No instance constructors"],
+					["Use when types share code + fields", "Use when types share a capability"]
+				]
+			},
+			{
+				kind: "when",
+				text: "Abstract class: a family with shared state (Shape with color). Interface: a capability (Payable, Auditable). If you only need a callback, a functional interface + lambda is enough."
+			},
+			{
+				kind: "tradeoff",
+				text: "Default methods let libraries evolve without breaking implementors, but two interfaces with the same default signature force the class to pick — diamond problem, solved by an explicit override."
+			}
+		]
+	},
+	{
+		id: "access-modifiers",
+		chapterId: "oop",
+		title: "Access modifiers",
+		blurb: "public > protected > package-private > private. Protected is visible to subclasses even outside the package — people forget that.",
+		keywords: [
+			"public",
+			"protected",
+			"default",
+			"private",
+			"package"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "table",
+				headers: [
+					"Modifier",
+					"Class",
+					"Package",
+					"Subclass",
+					"World"
+				],
+				rows: [
+					[
+						"public",
+						"yes",
+						"yes",
+						"yes",
+						"yes"
+					],
+					[
+						"protected",
+						"yes",
+						"yes",
+						"yes",
+						"no"
+					],
+					[
+						"package (default)",
+						"yes",
+						"yes",
+						"no",
+						"no"
+					],
+					[
+						"private",
+						"yes",
+						"no",
+						"no",
+						"no"
+					]
+				]
+			},
+			{
+				kind: "trap",
+				text: "Overriding cannot tighten access. public in parent cannot become protected in child. The other direction is allowed."
+			},
+			{
+				kind: "margin",
+				text: "private < default < protected < public"
+			}
+		]
+	},
+	{
+		id: "this-super",
+		chapterId: "oop",
+		title: "this() vs super()",
+		blurb: "Both must be the first statement in a constructor. You cannot call both in the same constructor.",
+		keywords: [
+			"this()",
+			"super()",
+			"constructor chaining"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "table",
+				headers: ["this()", "super()"],
+				rows: [
+					["Current class constructor", "Immediate parent constructor"],
+					["Constructor chaining in the same type", "Must run before subclass field init"],
+					["this.field / this.method() for current instance", "super.method() to reach hidden parent members"]
+				]
+			},
+			{
+				kind: "idea",
+				text: "If you write no constructor, javac gives a no-arg that calls super(). If the parent only has a parameterized constructor, you must call super(args) yourself."
+			},
+			{
+				kind: "trap",
+				text: "Fields in the child are not initialized yet when the parent constructor runs. Do not call overridable methods from a constructor — the child override sees default field values."
+			}
+		]
+	},
+	{
+		id: "association",
+		chapterId: "oop",
+		title: "Association, aggregation, composition",
+		blurb: "Has-a comes in strengths. Composition dies together. Aggregation can live apart. Association is just 'they know each other'.",
+		keywords: [
+			"has-a",
+			"part-of",
+			"lifecycle",
+			"coupling"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "table",
+			headers: [
+				"",
+				"Aggregation",
+				"Composition"
+			],
+			rows: [
+				[
+					"Strength",
+					"Weak has-a",
+					"Strong part-of"
+				],
+				[
+					"Lifecycle",
+					"Both can survive alone",
+					"Part dies with the whole"
+				],
+				[
+					"Coupling",
+					"Loose",
+					"Tight"
+				],
+				[
+					"Example",
+					"Department has Professors",
+					"House has Rooms; Order has LineItems"
+				]
+			]
+		}, {
+			kind: "why",
+			text: "This is how you answer 'is this a DB foreign key or an embeddable?' in JPA language. Composition often maps to cascade ALL + orphanRemoval. Aggregation often maps to a many-to-one without owning the other entity's life."
+		}]
+	},
+	{
+		id: "object-class",
+		chapterId: "oop",
+		title: "java.lang.Object",
+		blurb: "Root of the heap hierarchy. equals, hashCode, toString, clone, wait/notify live here. Get the contract right or HashMap lies to you.",
+		keywords: [
+			"equals",
+			"hashCode",
+			"toString",
+			"clone",
+			"wait",
+			"notify"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			title: "Methods you must be able to explain",
+			items: [
+				"equals — value equality, not identity.",
+				"hashCode — must agree with equals.",
+				"toString — for logs, not for parsing.",
+				"clone — broken-ish; prefer copy constructors.",
+				"wait / notify / notifyAll — on the object's monitor, inside synchronized."
+			]
+		}, {
+			kind: "trap",
+			text: "If you override equals, override hashCode. If a.equals(b) then a.hashCode() == b.hashCode(). Breaking this makes HashMap/HashSet lose entries after insert."
+		}]
+	},
+	{
+		id: "equals-hashcode",
+		chapterId: "oop",
+		title: "equals and hashCode contract",
+		blurb: "Filled gap. Reflexive, symmetric, transitive, consistent, null-safe. Hash code consistency is not optional.",
+		keywords: [
+			"equals",
+			"hashCode",
+			"contract",
+			"mutable key"
+		],
+		source: "filled",
+		level: "trap",
+		blocks: [
+			{
+				kind: "idea",
+				text: "equals must be reflexive, symmetric, transitive, consistent, and x.equals(null) is false. hashCode must be equal for equal objects, and should not change while the object is in a hash-based collection."
+			},
+			{
+				kind: "why",
+				text: "HashMap locates a bucket with hashCode, then confirms the key with equals. One without the other is a silent production bug."
+			},
+			{
+				kind: "trap",
+				text: "Never use a mutable field in equals/hashCode of a map key. Mutate it after put and the entry becomes unreachable. Prefer records or IDs. Lombok @Data on a JPA entity is a classic landmine — it includes collections and lazy links."
+			},
+			{
+				kind: "project",
+				text: "Entity equality: business key or id-after-persist, not every field. For JPA, many teams compare by id only when both ids are non-null, else identity."
+			}
+		]
+	},
+	{
+		id: "static-final",
+		chapterId: "oop",
+		title: "static vs final",
+		blurb: "static is about belonging to the type. final is about 'cannot change / cannot override / cannot extend'.",
+		keywords: [
+			"static",
+			"final",
+			"class loading",
+			"constant"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "table",
+				headers: [
+					"",
+					"static",
+					"final"
+				],
+				rows: [
+					[
+						"Applies to",
+						"fields, methods, nested types, blocks",
+						"fields, methods, classes, params"
+					],
+					[
+						"Job",
+						"one shared copy, class-level",
+						"freeze assignment / override / subclassing"
+					],
+					[
+						"Access",
+						"Type.name or instance (don't)",
+						"just the name"
+					],
+					[
+						"Change",
+						"static fields can mutate unless also final",
+						"final variable cannot be reassigned"
+					]
+				]
+			},
+			{
+				kind: "idea",
+				text: "static field: allocated when the class is loaded, shared by all instances. static method: no this, cannot touch instance state. main is static so the JVM can start without constructing your class."
+			},
+			{
+				kind: "trap",
+				text: "A final reference cannot be retargeted, but the object it points at can still mutate unless that object is immutable. Interface fields are public static final by default."
+			},
+			{
+				kind: "margin",
+				text: "constructors cannot be final."
+			}
+		]
+	},
+	{
+		id: "static-deeper",
+		chapterId: "oop",
+		title: "Static block, nested class, main, args",
+		blurb: "Class-load time vs instance time. Nested static types do not hold an outer this.",
+		keywords: [
+			"static block",
+			"nested class",
+			"main",
+			"command line"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"Static block runs once at class initialization, in textual order, useful for one-time setup.",
+				"Inner (non-static) nested class holds a hidden outer reference — leak risk.",
+				"Static nested class is just a namespaced type.",
+				"main(String[] args) is the JVM entry. Args are space-split tokens from the command line.",
+				"You cannot access instance members from a static context without an instance."
+			]
+		}]
+	},
+	{
+		id: "constructors",
+		chapterId: "oop",
+		title: "Constructors vs methods",
+		blurb: "Constructors initialize. They are not inherited. If you write any constructor, the default no-arg disappears.",
+		keywords: [
+			"constructor",
+			"no-arg",
+			"parameterized",
+			"return type"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "table",
+			headers: ["Method", "Constructor"],
+			rows: [
+				["Does work", "Builds and initializes"],
+				["Called explicitly", "Called by new / super / this"],
+				["May return a value", "No return type, not even void"],
+				["No default if missing", "Default no-arg if you write none"],
+				["Any name", "Must match the class name"]
+			]
+		}, {
+			kind: "trap",
+			text: "A 'constructor' with a return type is just a badly named method. JPA/Hibernate and Jackson often need a no-arg constructor — keep one if the type is an entity or a DTO that gets deserialized."
+		}]
+	},
+	{
+		id: "marker-interfaces",
+		chapterId: "oop",
+		title: "Marker interfaces, clone, serialize",
+		blurb: "A marker is a type with no methods, used as metadata. Cloneable and Serializable are the classic pair. Prefer copy constructors over clone().",
+		keywords: [
+			"Cloneable",
+			"Serializable",
+			"serialVersionUID",
+			"marker"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Marker / tagged interface: no methods, just a stamp. Cloneable tells Object.clone() it is allowed. Serializable tells ObjectOutputStream it may flatten the object to bytes."
+			},
+			{
+				kind: "bullets",
+				title: "Serialization notes",
+				items: [
+					"serialVersionUID is the compatibility handshake on deserialize.",
+					"transient fields are skipped.",
+					"Parent must be serializable or expose a no-arg constructor.",
+					"Do not serialize entities with lazy proxies unless you know the graph."
+				]
+			},
+			{
+				kind: "trap",
+				text: "Object.clone() is a shallow copy unless you override and deep-copy nested objects. Many style guides ban clone() — copy constructor or mapper is clearer."
+			}
+		]
+	},
+	{
+		id: "pass-by-value",
+		chapterId: "oop",
+		title: "Java is pass-by-value",
+		blurb: "Filled gap. You pass a copy of the reference, not the object, and not a C++ reference. Reassigning the parameter does not change the caller's variable.",
+		keywords: [
+			"pass-by-value",
+			"reference copy",
+			"swap"
+		],
+		source: "filled",
+		level: "trap",
+		blocks: [{
+			kind: "idea",
+			text: "Primitives: a copy of the bits. Objects: a copy of the pointer. Mutating fields through that pointer is visible to the caller. Pointing the parameter at a new object is not."
+		}, {
+			kind: "trap",
+			text: "The 'Java is pass-by-reference' answer is wrong. Swap(a, b) by reassigning parameters never swaps the caller's variables."
+		}]
+	},
+	{
+		id: "generics",
+		chapterId: "oop",
+		title: "Generics and type erasure",
+		blurb: "Filled gap. Compile-time types, erased at runtime. PECS: producer-extends, consumer-super.",
+		keywords: [
+			"erasure",
+			"PECS",
+			"wildcard",
+			"raw type"
+		],
+		source: "filled",
+		level: "deep",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Generics exist for the compiler. At runtime List<String> is a List. You cannot new T(), cannot have List<int>, cannot overload on different type args."
+			},
+			{
+				kind: "why",
+				text: "PECS: if a method only reads from a collection, List<? extends T>. If it only writes, List<? super T>. If it does both, use an exact type."
+			},
+			{
+				kind: "trap",
+				text: "Raw types (List without <>) throw away checking. Heap pollution + ClassCastException later. Never mix raw and parameterized unless you are reading pre-Java-5 code."
+			}
+		]
+	},
+	{
+		id: "autoboxing",
+		chapterId: "oop",
+		title: "Autoboxing and Integer cache",
+		blurb: "Filled gap. Integer.valueOf caches -128..127. == on wrappers is an interview trap.",
+		keywords: [
+			"autoboxing",
+			"cache",
+			"Integer",
+			"=="
+		],
+		source: "filled",
+		level: "trap",
+		blocks: [{
+			kind: "idea",
+			text: "Java boxes primitives to wrappers when a method wants an object. Unboxing can NPE on null. Integer cache makes Integer.valueOf(127) == Integer.valueOf(127) true, and 128 false."
+		}, {
+			kind: "trap",
+			text: "Always equals() for wrappers. Never ==. Streams of int vs Integer also surprise people: mapToInt vs map."
+		}]
+	}
+];
+var microTopics = [
+	{
+		id: "micro-basics",
+		chapterId: "micro",
+		title: "What a microservice is",
+		blurb: "Independently deployable, aligned to a business boundary. Not a table with a REST wrapper. The cost is distributed everything.",
+		keywords: [
+			"boundary",
+			"DDD",
+			"independent deploy",
+			"database per service"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "why",
+				text: "Independent scale, deploy, and failure domains. A payments outage should not take down catalog browse."
+			},
+			{
+				kind: "tradeoff",
+				text: "Network, eventual consistency, versioning, observability, distributed transactions you no longer have. If the team is small, a modular monolith is often the honest choice."
+			},
+			{
+				kind: "bullets",
+				title: "Platform pieces",
+				items: [
+					"API gateway — auth, routing, rate limit.",
+					"Service discovery / DNS.",
+					"Central config.",
+					"CI/CD per service.",
+					"Logs, metrics, traces.",
+					"Resilience: timeout, retry, circuit breaker, bulkhead."
+				]
+			},
+			{
+				kind: "trap",
+				text: "Splitting by table (UserService, AddressService) creates a distributed monolith. Split by capability (Checkout, Catalog, Identity)."
+			}
+		]
+	},
+	{
+		id: "resilience",
+		chapterId: "micro",
+		title: "Timeouts, retries, circuit breakers",
+		blurb: "Retry only what is transient and idempotent. A circuit without a timeout is a thread leak with extra steps.",
+		keywords: [
+			"timeout",
+			"backoff",
+			"jitter",
+			"circuit breaker",
+			"bulkhead"
+		],
+		source: "merged",
+		level: "trap",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Timeout is the budget. Retry with exponential backoff + jitter, only for GET or idempotent PUT with an idempotency key. Circuit breaker: Closed → Open (fail fast) → Half-open (probe). Bulkhead: isolate thread/connection pools so one dependency cannot take the process down."
+			},
+			{
+				kind: "trap",
+				text: "Retrying a non-idempotent POST doubles charges. Missing timeouts make retries stack. Fallbacks must be safe (cached, default, degrade) — not a silent 'success'."
+			},
+			{
+				kind: "project",
+				text: "Resilience4j around OpenFeign. Always pair with metrics on open-state and retry count."
+			}
+		]
+	},
+	{
+		id: "consistency",
+		chapterId: "micro",
+		title: "CAP, saga, outbox",
+		blurb: "Filled gap. You cannot have a two-phase commit across happy little services. You choreograph or orchestrate, and you make writes recoverable.",
+		keywords: [
+			"CAP",
+			"saga",
+			"outbox",
+			"idempotency",
+			"CQRS"
+		],
+		source: "filled",
+		level: "deep",
+		blocks: [{
+			kind: "idea",
+			text: "CAP: under partition, you pick consistency or availability. PACELC reminds you that even without partition you still pick latency vs consistency. Eventual consistency is a product decision, not a slogan."
+		}, {
+			kind: "bullets",
+			items: [
+				"Saga — each local txn + a compensating action. Orchestrator (one conductor) vs choreography (events).",
+				"Transactional outbox — write business row and 'event to publish' in the same DB txn; a relay publishes to Kafka. Avoids 'DB committed, broker down'.",
+				"Idempotency keys — clients send a key; you persist it so retries do not double-apply.",
+				"CQRS — separate write model from read model. Event sourcing — the log is the source of truth. Use when the domain earns the complexity."
+			]
+		}]
+	},
+	{
+		id: "observability",
+		chapterId: "micro",
+		title: "Logs, metrics, traces",
+		blurb: "Filled gap. Three pillars. A correlation id on every hop. Without this, microservices are unoperable.",
+		keywords: [
+			"correlation id",
+			"Prometheus",
+			"trace",
+			"structured log"
+		],
+		source: "filled",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"Logs — structured JSON, level, no secrets. ELK / Loki.",
+				"Metrics — RED (rate, errors, duration) + USE. Prometheus + Grafana.",
+				"Traces — one tree per request (Micrometer Tracing / OpenTelemetry).",
+				"Pass W3C traceparent or B3 headers through Feign/Kafka."
+			]
+		}]
+	}
+];
+var kafkaTopics = [{
+	id: "kafka-core",
+	chapterId: "kafka",
+	title: "Kafka building blocks",
+	blurb: "Distributed commit log. Topic → partitions → offsets. Ordering is per partition. Consumer groups share work.",
+	keywords: [
+		"topic",
+		"partition",
+		"offset",
+		"consumer group",
+		"broker"
+	],
+	source: "merged",
+	level: "core",
+	blocks: [
+		{
+			kind: "idea",
+			text: "A cluster is brokers. A topic is a named stream, split into partitions (the unit of parallelism and ordering). Each record in a partition has a monotonic offset. Producers append. Consumers read and remember offsets (usually in __consumer_offsets)."
+		},
+		{
+			kind: "bullets",
+			items: [
+				"Key → partition (hash). Same key, same partition, so order is preserved for that key.",
+				"A group cannot usefully have more active consumers than partitions.",
+				"Replication: leader + followers. acks=all + min.insync.replicas is the durability knob.",
+				"Retention by time/size. Compaction keeps the latest value per key."
+			]
+		},
+		{
+			kind: "project",
+			text: "Spring: KafkaTemplate to produce, @KafkaListener to consume. Design keys, poison-pill handling, and schema evolution (Schema Registry) before go-live."
+		}
+	]
+}, {
+	id: "kafka-delivery",
+	chapterId: "kafka",
+	title: "Delivery, lag, rebalance",
+	blurb: "At-least-once is the default story. Exactly-once is a specific setup, not a vibe. Consumers must tolerate duplicates.",
+	keywords: [
+		"at-least-once",
+		"idempotent producer",
+		"lag",
+		"rebalance",
+		"DLT"
+	],
+	source: "merged",
+	level: "trap",
+	blocks: [{
+		kind: "idea",
+		text: "A crash after processing but before committing the offset → redelivery. Make handlers idempotent. Idempotent producers (enable.idempotence) stop duplicate writes from producer retries. Transactions can give read-process-write EOS in Kafka Streams / consume-transform-produce."
+	}, {
+		kind: "bullets",
+		items: [
+			"Lag = end offset − committed offset. Alert on it.",
+			"Rebalance: a consumer joins/leaves, partitions move. Keep processing fast; avoid heavy init in the listener without pausing.",
+			"Retries + DLT (dead letter topic) for poison messages.",
+			"Do not use Kafka as a DB. Do not log payloads with PII at info."
+		]
+	}]
+}];
+var testingTopics = [{
+	id: "junit-mockito",
+	chapterId: "testing",
+	title: "JUnit 5 and Mockito",
+	blurb: "Test the behaviour at the boundary. Mock collaborators, not every internal. assertThrows for exceptions.",
+	keywords: [
+		"@Test",
+		"@Mock",
+		"@InjectMocks",
+		"verify"
+	],
+	source: "ultimate",
+	level: "core",
+	blocks: [{
+		kind: "bullets",
+		items: [
+			"@Test, @BeforeEach, @AfterEach, @BeforeAll, @AfterAll.",
+			"Parameterized tests for tables of input.",
+			"@Mock collaborator. @InjectMocks unit under test.",
+			"when(...).thenReturn / thenThrow. verify(mock).method().",
+			"ArgumentCaptor when you need to assert the outbound DTO."
+		]
+	}, {
+		kind: "trap",
+		text: "Mocking the class under test is a smell. Mocking JPA entities is a smell. Prefer an in-memory or Testcontainers DB for repositories."
+	}]
+}, {
+	id: "spring-tests",
+	chapterId: "testing",
+	title: "Spring Boot test slices",
+	blurb: "@SpringBootTest is the whole context. Slices are faster and stricter. MockMvc for MVC. Testcontainers for the real broker/DB.",
+	keywords: [
+		"WebMvcTest",
+		"DataJpaTest",
+		"MockMvc",
+		"Testcontainers"
+	],
+	source: "ultimate",
+	level: "core",
+	blocks: [{
+		kind: "bullets",
+		items: [
+			"@WebMvcTest — controllers + MVC, mock the service.",
+			"@DataJpaTest — repositories + embedded/real DB.",
+			"@RestClientTest — client slice.",
+			"@SpringBootTest — almost e2e, slow.",
+			"Testcontainers: Postgres, Kafka, in CI."
+		]
+	}]
+}];
+var sqlTopics = [{
+	id: "sql-core",
+	chapterId: "sql",
+	title: "SQL you must write on a whiteboard",
+	blurb: "SELECT, JOIN, GROUP BY, subquery, window functions, NULL. Know DDL vs DML vs DQL.",
+	keywords: [
+		"JOIN",
+		"GROUP BY",
+		"window",
+		"NULL",
+		"ACID"
+	],
+	source: "merged",
+	level: "core",
+	drillId: "sql-dept-avg",
+	blocks: [
+		{
+			kind: "bullets",
+			items: [
+				"ACID — atomic, consistent, isolated, durable.",
+				"PK / FK / unique / check / not null.",
+				"INNER JOIN vs LEFT JOIN. Self-join for manager/employee.",
+				"GROUP BY + HAVING vs WHERE.",
+				"Indexes: B-tree default. They speed lookup and can slow write. EXPLAIN ANALYZE is the truth.",
+				"Normalize to 3NF, denormalize when a measured read path needs it."
+			]
+		},
+		{
+			kind: "code",
+			caption: "Patterns",
+			code: `SELECT department, AVG(salary) AS avg_salary
+FROM employees GROUP BY department;
+
+SELECT * FROM employees
+WHERE salary > (SELECT AVG(salary) FROM employees);
+
+SELECT employee_id, salary, department,
+       ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) AS rnk
+FROM employees;`
+		},
+		{
+			kind: "trap",
+			text: "NULL is not = and not <> . Use IS NULL. COUNT(*) counts rows; COUNT(col) skips nulls. OFFSET pagination gets slower as you go deeper — prefer keyset/cursor."
+		}
+	]
+}, {
+	id: "postgres",
+	chapterId: "sql",
+	title: "PostgreSQL — MVCC, JSONB, pooling",
+	blurb: "Readers don't block writers. Vacuum is not optional. JSONB + GIN is a real index, not a toy.",
+	keywords: [
+		"MVCC",
+		"VACUUM",
+		"JSONB",
+		"GIN",
+		"HikariCP"
+	],
+	source: "ultimate",
+	level: "deep",
+	blocks: [{
+		kind: "idea",
+		text: "MVCC: updates make a new row version. Old versions stay until VACUUM. That is how readers see a snapshot. Ignore vacuum and the table bloats, then query plans rot."
+	}, {
+		kind: "bullets",
+		items: [
+			"JSONB — binary JSON, index with GIN.",
+			"GiST / SP-GiST — geo, full text, ranges.",
+			"HikariCP — pool size ≈ ((core_count * 2) + spindle) as a starting heuristic, then measure. Pool + DB max_connections must fit together.",
+			"Flyway/Liquibase for migrations. Parameterized queries always."
+		]
+	}]
+}];
+var dataTopics = [{
+	id: "nosql",
+	chapterId: "data",
+	title: "NoSQL map",
+	blurb: "Pick for access pattern, not for fashion. You trade joins and rigid schema for scale and flexibility.",
+	keywords: [
+		"MongoDB",
+		"Redis",
+		"Cassandra",
+		"Neo4j"
+	],
+	source: "ultimate",
+	level: "core",
+	blocks: [{
+		kind: "bullets",
+		items: [
+			"Document — MongoDB. JSON docs, rich queries, beware unbounded arrays.",
+			"Key-value — Redis. Cache, lock, session, rate limit, sorted sets.",
+			"Wide-column — Cassandra. Partition key design is the whole game.",
+			"Graph — Neo4j. Relationships first."
+		]
+	}, {
+		kind: "when",
+		text: "Need multi-row ACID and joins? Postgres. Need sub-ms cache? Redis. Need write-heavy time series across DC? Cassandra, with open eyes."
+	}]
+}, {
+	id: "cache",
+	chapterId: "data",
+	title: "Caching and Redis",
+	blurb: "Filled gap. Cache-aside is the usual Spring @Cacheable story. Know stampede, TTL, and what not to cache.",
+	keywords: [
+		"cache-aside",
+		"write-through",
+		"TTL",
+		"stampede"
+	],
+	source: "filled",
+	level: "deep",
+	blocks: [{
+		kind: "idea",
+		text: "Cache-aside: miss → DB → put. Write-through: write DB and cache together. Write-behind: queue the DB write (danger). TTL + jitter to avoid stampedes. For hot keys, lock or computeIfAbsent-style single flight."
+	}, {
+		kind: "trap",
+		text: "Caching a user object without a version is how you serve stale permissions. Cache authorization decisions carefully. Redis SETNX / Redisson for a lock — always expire the lock."
+	}]
+}];
+var cloudTopics = [{
+	id: "aws-compute",
+	chapterId: "cloud",
+	title: "Lambda, EC2, EKS",
+	blurb: "Serverless vs VM vs managed Kubernetes. Cold starts, IAM, and health checks matter more than logos.",
+	keywords: [
+		"Lambda",
+		"EC2",
+		"EKS",
+		"IAM"
+	],
+	source: "merged",
+	level: "core",
+	blocks: [{
+		kind: "bullets",
+		items: [
+			"Lambda — event in, pay per use. Cold start, 15 min cap, no sticky SSH, watch connection reuse.",
+			"EC2 — you patch, scale, and alarm it. IAM role, VPC, EBS, ASG, CloudWatch.",
+			"EKS — control plane managed. You still own deployments, probes, RBAC, cost.",
+			"EFS — shared NFS-style volume when instances must share files."
+		]
+	}, {
+		kind: "idea",
+		text: "Horizontal scale = more instances. Vertical = bigger instance. Prefer horizontal for stateless APIs."
+	}]
+}, {
+	id: "aws-net-storage",
+	chapterId: "cloud",
+	title: "Load balancers, S3, Parameter Store",
+	blurb: "ALB is L7 HTTP. NLB is L4. S3 is object storage. Secrets do not live in git.",
+	keywords: [
+		"ALB",
+		"NLB",
+		"S3",
+		"SSM"
+	],
+	source: "merged",
+	level: "core",
+	blocks: [{
+		kind: "bullets",
+		items: [
+			"ALB — path/host routing, HTTP features.",
+			"NLB — extreme throughput, TCP/TLS, static IP.",
+			"GWLB — appliances.",
+			"S3 — buckets, encryption, versioning, lifecycle, block public access, presigned URLs.",
+			"SSM Parameter Store / Secrets Manager — config and secrets, encrypted."
+		]
+	}, {
+		kind: "trap",
+		text: "A public S3 bucket is a CV of infamy. Lambda + RDS without a pooler will exhaust connections on a spike."
+	}]
+}];
+var adjacentTopics = [
+	{
+		id: "feign",
+		chapterId: "adjacent",
+		title: "OpenFeign",
+		blurb: "Declarative HTTP. An interface plus annotations. Still needs timeouts, metrics, and a fallback that tells the truth.",
+		keywords: [
+			"FeignClient",
+			"EnableFeignClients",
+			"decoder"
+		],
+		source: "ultimate",
+		level: "core",
+		blocks: [{
+			kind: "code",
+			code: `@FeignClient(name = "payment-service")
+public interface PaymentClient {
+    @GetMapping("/payments/{id}")
+    PaymentResponse find(@PathVariable("id") Long id);
+}`
+		}, {
+			kind: "idea",
+			text: "For highly reactive or streaming clients, WebClient may fit better. Feign is the comfortable Spring Cloud default for request/response."
+		}]
+	},
+	{
+		id: "grpc",
+		chapterId: "adjacent",
+		title: "gRPC and Protobuf",
+		blurb: "Contract-first RPC on HTTP/2. Unary and streaming. Field numbers are compatibility.",
+		keywords: [
+			"protobuf",
+			"unary",
+			"streaming",
+			"deadline"
+		],
+		source: "ultimate",
+		level: "deep",
+		blocks: [{
+			kind: "idea",
+			text: "Four shapes: unary, server stream, client stream, bidi. Generated stubs. Deadlines, cancellation, TLS, status codes, health. Never reuse a protobuf field number for a new meaning."
+		}, {
+			kind: "when",
+			text: "Internal service-to-service, low latency, typed contracts, streaming. REST still wins for public browser APIs."
+		}]
+	},
+	{
+		id: "graphql",
+		chapterId: "adjacent",
+		title: "GraphQL",
+		blurb: "Clients ask for fields. Over-fetching shrinks; N+1 in resolvers grows if you are careless.",
+		keywords: [
+			"schema",
+			"resolver",
+			"dataloader",
+			"complexity"
+		],
+		source: "ultimate",
+		level: "deep",
+		blocks: [{
+			kind: "idea",
+			text: "Types, queries, mutations, subscriptions. Resolvers load fields. DataLoader batches to kill N+1. Depth/complexity limits, field-level auth, pagination, traces. Spring for GraphQL or Quarkus extensions."
+		}, {
+			kind: "trap",
+			text: "GraphQL is not a performance silver bullet. A nested query can be more expensive than the REST it replaced."
+		}]
+	},
+	{
+		id: "quarkus",
+		chapterId: "adjacent",
+		title: "Quarkus",
+		blurb: "Build-time metadata, fast start, native via GraalVM. Compare with Spring on team skill and ecosystem, not a tweeted benchmark.",
+		keywords: [
+			"GraalVM",
+			"build-time",
+			"native",
+			"dev mode"
+		],
+		source: "ultimate",
+		level: "deep",
+		blocks: [{
+			kind: "idea",
+			text: "Shifts DI and reflection work to build. Dev mode live-reloads. Native images need extra config for reflection, resources, proxies. Kubernetes-native story is the point."
+		}]
+	},
+	{
+		id: "lombok-guava",
+		chapterId: "adjacent",
+		title: "Lombok and Guava",
+		blurb: "@Data on a JPA entity is a footgun. Guava is optional once the JDK caught up.",
+		keywords: [
+			"@Getter",
+			"@Builder",
+			"@Data",
+			"Guava"
+		],
+		source: "ultimate",
+		level: "trap",
+		blocks: [{
+			kind: "idea",
+			text: "Lombok: @Getter @Setter @Builder @NoArgsConstructor @AllArgsConstructor are the safe daily set. @Data generates equals/hashCode/toString that can touch lazy fields and recurse. Guava: immutable collections, caches, preconditions — use when the JDK equivalent is worse, not by default."
+		}]
+	}
+];
+var exceptionTopics = [
+	{
+		id: "exception-hierarchy",
+		chapterId: "exceptions",
+		title: "Throwable, Error, Exception",
+		blurb: "Throwable is the root. Error is the JVM on fire. Exception is your problem. Do not catch Throwable.",
+		keywords: [
+			"Throwable",
+			"Error",
+			"checked",
+			"unchecked"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Object → Throwable → Error | Exception. Exception → RuntimeException (unchecked) and everything else checked. Checked: compiler forces catch or throws (IOException, SQLException). Unchecked: RuntimeException and subclasses (NPE, IAE, ISE)."
+			},
+			{
+				kind: "table",
+				headers: ["Error", "Exception"],
+				rows: [
+					["Environment / JVM", "Application"],
+					["OutOfMemoryError, StackOverflowError", "IOException, NPE"],
+					["Usually do not catch", "Handle or declare"]
+				]
+			},
+			{
+				kind: "trap",
+				text: "catch (Throwable t) also swallows Errors. catch (Exception e) is already too wide for most methods. Catch the most specific type, log once, keep the cause when you wrap."
+			}
+		]
+	},
+	{
+		id: "try-catch-finally",
+		chapterId: "exceptions",
+		title: "try, catch, finally, throw vs throws",
+		blurb: "finally always runs (except JVM death / infinite loop). try-with-resources beats manual finally for AutoCloseable.",
+		keywords: [
+			"finally",
+			"try-with-resources",
+			"throw",
+			"throws"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [
+			{
+				kind: "table",
+				headers: ["throw", "throws"],
+				rows: [
+					["Throws an instance", "Declares a type on the method"],
+					["Inside the body", "On the signature"],
+					["throw new IOException(\"x\")", "void m() throws IOException"]
+				]
+			},
+			{
+				kind: "table",
+				caption: "final / finally / finalize",
+				headers: [
+					"final",
+					"finally",
+					"finalize"
+				],
+				rows: [[
+					"Keyword: freeze class/method/field",
+					"Block: always after try/catch",
+					"Method: deprecated GC hook"
+				]]
+			},
+			{
+				kind: "bullets",
+				title: "Overriding vs exceptions",
+				items: [
+					"If parent declares nothing, child cannot add checked exceptions. Unchecked is fine.",
+					"If parent declares checked E, child may declare E, a subclass of E, or nothing.",
+					"Child cannot declare a sibling/supertype checked exception."
+				]
+			},
+			{
+				kind: "why",
+				text: "try-with-resources calls close() in reverse order and suppresses secondary exceptions on the primary. Use it for streams, JDBC, HTTP clients."
+			}
+		]
+	},
+	{
+		id: "spring-errors",
+		chapterId: "exceptions",
+		title: "API errors in Spring",
+		blurb: "Never leak stack traces. @ControllerAdvice + @ExceptionHandler → a stable JSON shape.",
+		keywords: [
+			"ControllerAdvice",
+			"Problem JSON",
+			"validation"
+		],
+		source: "ultimate",
+		level: "core",
+		blocks: [{
+			kind: "idea",
+			text: "Map domain errors to HTTP. Include timestamp, status, code, message, path, field errors. MethodArgumentNotValidException for @Valid bodies."
+		}, {
+			kind: "trap",
+			text: "Do not return e.getMessage() from unknown exceptions — it can contain SQL or PII. Log internally, return a generic 500 with a correlation id."
+		}]
+	}
+];
+var patternTopics = [
+	{
+		id: "solid",
+		chapterId: "patterns",
+		title: "SOLID",
+		blurb: "Five design pressures, not a religion. Recite them with a one-line example each.",
+		keywords: [
+			"SRP",
+			"OCP",
+			"LSP",
+			"ISP",
+			"DIP"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"SRP — one reason to change. A repository does not also send email.",
+				"OCP — add a new Shape implementation without editing the renderer.",
+				"LSP — a Square that breaks Rectangle setters is not a Rectangle.",
+				"ISP — do not force a client to depend on a 40-method God interface.",
+				"DIP — depend on EmailSender, not SmtpEmailSenderImpl."
+			]
+		}, {
+			kind: "project",
+			text: "PaymentService depends on PaymentGateway. Stripe and Razorpay are plugins. That is OCP + DIP together."
+		}]
+	},
+	{
+		id: "singleton",
+		chapterId: "patterns",
+		title: "Singleton",
+		blurb: "One instance, global access. Easy to get wrong under concurrency. enum is the lazy-safe Java form. Spring already gives you a container singleton.",
+		keywords: [
+			"private constructor",
+			"enum",
+			"double-checked",
+			"volatile"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "code",
+				caption: "Lazy holder / classic sketch — still racy without sync",
+				code: `public final class Singleton {
+    private static Singleton instance;
+    private Singleton() {}
+    public static Singleton getInstance() {
+        if (instance == null) instance = new Singleton();
+        return instance;
+    }
+}`
+			},
+			{
+				kind: "idea",
+				text: "Make it correct: enum Singleton { INSTANCE; } or private constructor + static final field (eager) or holder class idiom. Double-checked locking needs volatile on the field."
+			},
+			{
+				kind: "why",
+				text: "One DB connection factory, one meter registry. Spring @Service is already a singleton per context — do not also roll your own."
+			},
+			{
+				kind: "tradeoff",
+				text: "Hidden global state. Hard to test. Hidden coupling. Limits scale if the thing holds request data by mistake."
+			}
+		]
+	},
+	{
+		id: "factory",
+		chapterId: "patterns",
+		title: "Factory",
+		blurb: "Callers ask for a Shape, not new Circle(). Creation is centralized so new types do not leak into every client.",
+		keywords: [
+			"create",
+			"product",
+			"hide new"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "code",
+				code: `public interface Shape { void draw(); }
+
+public class ShapeFactory {
+    public Shape create(String type) {
+        if ("circle".equals(type)) return new Circle();
+        if ("square".equals(type)) return new Square();
+        throw new IllegalArgumentException(type);
+    }
+}`
+			},
+			{
+				kind: "why",
+				text: "Clients depend on the abstraction. You can swap implementations, cache, or decorate without touching callers."
+			},
+			{
+				kind: "tradeoff",
+				text: "A giant switch on strings is still a maintenance dump. Prefer a registry, Spring @Component + @Qualifier, or a sealed type + switch."
+			}
+		]
+	},
+	{
+		id: "observer-strategy",
+		chapterId: "patterns",
+		title: "Observer and Strategy",
+		blurb: "Observer: one-to-many events. Strategy: swap an algorithm at runtime. Composition beats another inheritance tree.",
+		keywords: [
+			"event",
+			"algorithm",
+			"composition"
+		],
+		source: "ultimate",
+		level: "core",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Observer — publisher holds listeners, notify on change. Watch for leaks (never unregister) and delivery guarantees (sync vs async, at-least-once)."
+			},
+			{
+				kind: "idea",
+				text: "Strategy — PaymentMethod, PricingRule, ValidationRule as interfaces. Select at runtime from config or the request."
+			},
+			{
+				kind: "project",
+				text: "Pricing: Regular, Festival, Employee strategies. Adding a new one is a new class, not an if-else in OrderService — OCP."
+			}
+		]
+	}
+];
+var springTopics = [
+	{
+		id: "ioc",
+		chapterId: "spring",
+		title: "IoC, DI, stereotypes",
+		blurb: "Spring owns construction. You declare what you need. Constructor injection is the default for required deps.",
+		keywords: [
+			"IoC",
+			"DI",
+			"Component",
+			"constructor injection"
+		],
+		source: "ultimate",
+		level: "core",
+		blocks: [{
+			kind: "idea",
+			text: "Inversion of Control: the container calls you. Dependency Injection is how it supplies collaborators. Stereotypes: @Component, @Service, @Repository, @Controller — all beans, different intent (and @Repository also translates persistence exceptions)."
+		}, {
+			kind: "bullets",
+			items: [
+				"Prefer constructors for mandatory deps. Field @Autowired is shorter and worse for tests.",
+				"@Qualifier when several implementations exist. @Primary marks the default.",
+				"@PostConstruct / @PreDestroy for lifecycle. DisposableBean if you must.",
+				"Profiles: environment settings, not a place to hide business branches."
+			]
+		}]
+	},
+	{
+		id: "bean-scopes",
+		chapterId: "spring",
+		title: "Bean scopes and circular deps",
+		blurb: "Default is singleton per ApplicationContext. Prototype is a new instance per lookup. A prototype inside a singleton is still one instance unless you look it up each time.",
+		keywords: [
+			"singleton",
+			"prototype",
+			"request",
+			"circular"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"singleton — one per container. Stateless services.",
+				"prototype — new every getBean / inject (but not re-injected into an already-built singleton).",
+				"request / session — web scopes.",
+				"Circular A↔B: constructor injection fails fast (good). Setter/field injection can paper over it with a half-built proxy — fix the design instead."
+			]
+		}, {
+			kind: "trap",
+			text: "Prototype in a singleton field is created once. Use ObjectFactory, Provider, or lookup method if you truly need a new one per call."
+		}]
+	},
+	{
+		id: "spring-boot",
+		chapterId: "spring",
+		title: "Spring Boot",
+		blurb: "@SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan. Starters, embedded server, Actuator, type-safe config.",
+		keywords: [
+			"auto-configuration",
+			"starter",
+			"Actuator",
+			"ConfigurationProperties"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [{
+			kind: "idea",
+			text: "Boot guesses beans from the classpath (a DataSource if you have a driver + url). Starters are curated dependency sets (web, data-jpa, security). Embedded Tomcat means java -jar is a server. application.yml + profiles + @ConfigurationProperties for grouped config."
+		}, {
+			kind: "bullets",
+			items: [
+				"@RestController = @Controller + @ResponseBody.",
+				"Actuator: health, metrics, info — lock down or hide in prod.",
+				"Don't fight auto-config until you must; then exclude or @Bean override.",
+				"Running as a Java application starts the embedded server."
+			]
+		}]
+	},
+	{
+		id: "aop",
+		chapterId: "spring",
+		title: "AOP and @Transactional gotchas",
+		blurb: "Cross-cutting via proxies. Transactions, security, logging. Self-invocation does not hit the proxy.",
+		keywords: [
+			"proxy",
+			"pointcut",
+			"advice",
+			"self-invocation"
+		],
+		source: "merged",
+		level: "trap",
+		blocks: [
+			{
+				kind: "idea",
+				text: "Aspect = advice + pointcut. Join point is a candidate call. Spring AOP is typically interface JDK proxy or CGLIB subclass. @Transactional, @Async, @Cacheable all ride this."
+			},
+			{
+				kind: "trap",
+				text: "this.otherMethod() inside the same class bypasses the proxy — no transaction, no async. Split classes, or inject self. Also: @Transactional on private methods is ignored. Checked exceptions do not roll back by default — only RuntimeException, unless rollbackFor is set."
+			},
+			{
+				kind: "project",
+				text: "Keep the transaction at the service boundary, one unit of work. Do not @Transactional on a controller that then calls three services each with their own transaction unless you meant that."
+			}
+		]
+	},
+	{
+		id: "async-boot",
+		chapterId: "spring",
+		title: "@Async",
+		blurb: "Not a performance spell. Bound the executor. Handle errors. Same proxy rules as transactions.",
+		keywords: [
+			"EnableAsync",
+			"TaskExecutor",
+			"proxy"
+		],
+		source: "ultimate",
+		level: "deep",
+		blocks: [{
+			kind: "idea",
+			text: "@EnableAsync + @Async. Return CompletableFuture if you need a handle. Configure a pool size and a queue. Uncaught exceptions in void @Async methods vanish unless you set an AsyncUncaughtExceptionHandler."
+		}]
+	}
+];
+var restTopics = [
+	{
+		id: "rest-principles",
+		chapterId: "rest",
+		title: "REST, status codes, OpenAPI",
+		blurb: "Resources, verbs, stateless, uniform interface. Design pagination, filtering, errors, and idempotency up front.",
+		keywords: [
+			"stateless",
+			"resource",
+			"idempotent",
+			"OpenAPI"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [
+			{
+				kind: "bullets",
+				title: "HTTP methods",
+				items: [
+					"GET — read, safe, idempotent.",
+					"POST — create or action, not idempotent.",
+					"PUT — replace the resource at this URI, idempotent.",
+					"PATCH — partial update, not guaranteed idempotent.",
+					"DELETE — remove, idempotent in the 'already gone is fine' sense."
+				]
+			},
+			{
+				kind: "bullets",
+				title: "Statuses to have on your tongue",
+				items: [
+					"200 OK, 201 Created, 202 Accepted, 204 No Content",
+					"400 Bad Request, 401 Unauthorized, 403 Forbidden, 404, 409 Conflict, 422 Unprocessable Content",
+					"429 Too Many Requests, 500, 502, 503"
+				]
+			},
+			{
+				kind: "why",
+				text: "OpenAPI/Swagger documents the contract. @Operation, @ApiResponse, @Parameter. It is not optional in a multi-team backend."
+			}
+		]
+	},
+	{
+		id: "put-patch-post",
+		chapterId: "rest",
+		title: "PUT vs PATCH vs POST",
+		blurb: "PUT sends the whole document. PATCH sends a delta. POST creates (or triggers).",
+		keywords: [
+			"idempotent",
+			"replace",
+			"partial"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "table",
+			headers: [
+				"PUT",
+				"PATCH",
+				"POST"
+			],
+			rows: [
+				[
+					"Full replace (or create-at-id)",
+					"Partial change",
+					"Create / process"
+				],
+				[
+					"Idempotent",
+					"Not guaranteed",
+					"Not idempotent"
+				],
+				[
+					"Body = full resource",
+					"Body = fields to change",
+					"Body = new resource"
+				]
+			]
+		}]
+	},
+	{
+		id: "spring-mvc-annotations",
+		chapterId: "rest",
+		title: "Spring MVC annotations you will be asked",
+		blurb: "A working set, not a dump. Know where the value comes from: path, query, body, header.",
+		keywords: [
+			"GetMapping",
+			"PathVariable",
+			"RequestParam",
+			"RequestBody"
+		],
+		source: "cheatcode",
+		level: "core",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"@Get/Post/Put/Patch/DeleteMapping — HTTP + path.",
+				"@RequestMapping — the general form (method, consumes, produces).",
+				"@PathVariable — /users/{id}.",
+				"@RequestParam — ?page=1. Default values exist.",
+				"@RequestBody + @Valid — JSON body.",
+				"@RequestHeader, @CookieValue — as named.",
+				"@RestController vs @Controller — data vs view.",
+				"@ExceptionHandler — local or in @ControllerAdvice."
+			]
+		}]
+	},
+	{
+		id: "validation",
+		chapterId: "rest",
+		title: "Validation",
+		blurb: "@NotNull, @Size, @Email, @Pattern on the DTO. @Valid on the parameter. Handle MethodArgumentNotValidException once.",
+		keywords: [
+			"Valid",
+			"Validated",
+			"Bean Validation"
+		],
+		source: "merged",
+		level: "core",
+		blocks: [{
+			kind: "code",
+			code: `@PostMapping("/users")
+public ResponseEntity<Void> create(@RequestBody @Valid UserDto dto) { ... }
+
+public class UserDto {
+    @NotNull @Size(min = 3, max = 50)
+    private String username;
+}`
+		}, {
+			kind: "idea",
+			text: "Custom Validator for cross-field rules (password == confirm). Sanitize at the edge. Never trust the client."
+		}]
+	}
+];
+var jpaTopics = [
+	{
+		id: "jpa-basics",
+		chapterId: "jpa",
+		title: "Spring Data JPA",
+		blurb: "JpaRepository gives CRUD and derived queries. @Transactional marks the unit of work. Entities, DTOs, and API models are not the same thing.",
+		keywords: [
+			"JpaRepository",
+			"derived query",
+			"EntityManager"
+		],
+		source: "ultimate",
+		level: "core",
+		blocks: [{
+			kind: "idea",
+			text: "The persistence context is a first-level cache of managed entities. Dirty checking flushes changes at commit. Repositories should stay thin; domain rules live in services."
+		}, {
+			kind: "trap",
+			text: "LazyInitializationException: the session is closed and you touched a lazy collection. Open-session-in-view hides this in web apps and then blows up in async/event threads. Prefer fetch plans."
+		}]
+	},
+	{
+		id: "n-plus-one",
+		chapterId: "jpa",
+		title: "N+1 and fetch plans",
+		blurb: "One query for parents, N for children. Kill it with join fetch, @EntityGraph, batch size, or a projection.",
+		keywords: [
+			"N+1",
+			"join fetch",
+			"EntityGraph",
+			"projection"
+		],
+		source: "ultimate",
+		level: "trap",
+		blocks: [{
+			kind: "idea",
+			text: "findAll() on Order then order.getLines() in a loop is N+1. Fix: join fetch in JPQL, @EntityGraph on the repo method, @BatchSize, or a DTO query that selects only what the API needs."
+		}, {
+			kind: "tradeoff",
+			text: "join fetch of two bags can cartesian-product. Don't fetch the whole graph 'just in case'."
+		}]
+	},
+	{
+		id: "locking-isolation",
+		chapterId: "jpa",
+		title: "Locking and isolation",
+		blurb: "Filled gap. Optimistic (@Version) for low contention. Pessimistic lock for 'this row must not move'. Isolation levels define what anomalies you accept.",
+		keywords: [
+			"@Version",
+			"optimistic",
+			"pessimistic",
+			"READ_COMMITTED"
+		],
+		source: "filled",
+		level: "deep",
+		blocks: [{
+			kind: "bullets",
+			items: [
+				"Read Uncommitted — dirty reads. Rarely used.",
+				"Read Committed — default on Postgres. No dirty reads. Non-repeatable reads possible.",
+				"Repeatable Read — Postgres is actually snapshot-ish; phantom behaviour differs by engine.",
+				"Serializable — highest; retries on conflict."
+			]
+		}, {
+			kind: "idea",
+			text: "Optimistic: a version column. Concurrent update → ObjectOptimisticLockingFailureException → retry. Pessimistic: SELECT FOR UPDATE. Can deadlock; keep short."
+		}]
+	}
+];
+var securityTopics = [{
+	id: "authn-authz",
+	chapterId: "security",
+	title: "Authentication vs authorization",
+	blurb: "Who are you vs what may you do. Mixing them in an interview is an instant miss.",
+	keywords: [
+		"authentication",
+		"authorization",
+		"SecurityFilterChain"
+	],
+	source: "merged",
+	level: "core",
+	blocks: [
+		{
+			kind: "idea",
+			text: "Authentication: credentials, session, JWT, OAuth login. Authorization: roles, authorities, method security, path matchers. Spring Security is a filter chain in front of the dispatcher."
+		},
+		{
+			kind: "bullets",
+			items: [
+				"SecurityFilterChain bean configures order: CSRF, auth, headers…",
+				"Resource server: validate JWT from a trusted issuer.",
+				"Passwords: BCrypt (or stronger), never reversible encryption.",
+				"HTTPS everywhere. Least privilege. Deny by default.",
+				"Basic vs digest: Basic is base64, not encryption. Digest is challenge-response. Neither replaces TLS + modern tokens."
+			]
+		},
+		{
+			kind: "project",
+			text: "API gateway checks JWT. Each service still enforces method-level rules — never trust the network inside the mesh blindly."
+		}
+	]
+}, {
+	id: "jwt-oauth",
+	chapterId: "security",
+	title: "JWT, OAuth2, sessions",
+	blurb: "Filled gap. JWT is a signed claim set, not a magic login system. Know the three parts and the revocation problem.",
+	keywords: [
+		"header",
+		"payload",
+		"signature",
+		"refresh token",
+		"CSRF"
+	],
+	source: "filled",
+	level: "deep",
+	blocks: [{
+		kind: "idea",
+		text: "JWT: header.payload.signature. Claims: sub, exp, iss, aud, roles. Signature proves integrity, not secrecy — do not put PII or secrets in the payload. Revocation is hard; keep TTLs short and use refresh tokens / denylist if you must kill access now."
+	}, {
+		kind: "trap",
+		text: "Cookie sessions need CSRF protection. Bearer tokens in Authorization headers from a SPA are a different threat model (XSS). alg=none is a famous bug. Always pin the algorithm on verify."
+	}]
+}];
+var topics = [
+	...oopTopics,
+	...javaFeatureTopics,
+	...collectionTopics,
+	...concurrencyTopics,
+	...jvmTopics,
+	...exceptionTopics,
+	...patternTopics,
+	...springTopics,
+	...restTopics,
+	...jpaTopics,
+	...securityTopics,
+	...microTopics,
+	...kafkaTopics,
+	...testingTopics,
+	...sqlTopics,
+	...dataTopics,
+	...cloudTopics,
+	...adjacentTopics,
+	...extraTopics
+];
+var topicById = new Map(topics.map((t) => [t.id, t]));
+var drillById = new Map(drills.map((d) => [d.id, d]));
+var chapterById = new Map(chapters.map((c) => [c.id, c]));
+function getTopic(id) {
+	return topicById.get(id);
+}
+function getChapter(id) {
+	return chapterById.get(id);
+}
+function getDrill(id) {
+	return drillById.get(id);
+}
+function topicsForChapter(chapterId) {
+	return topics.filter((t) => t.chapterId === chapterId);
+}
+function searchTopics(query) {
+	const q = query.trim().toLowerCase();
+	if (!q) return topics;
+	return topics.filter((t) => {
+		if (t.title.toLowerCase().includes(q) || t.blurb.toLowerCase().includes(q)) return true;
+		if (t.keywords.some((k) => k.toLowerCase().includes(q))) return true;
+		return t.blocks.some((b) => blockText(b).toLowerCase().includes(q));
+	});
+}
+function blockText(block) {
+	switch (block.kind) {
+		case "table": return [
+			block.caption,
+			...block.headers,
+			...block.rows.flat()
+		].filter(Boolean).join(" ");
+		case "bullets": return [block.title, ...block.items].filter(Boolean).join(" ");
+		case "code": return `${block.caption ?? ""} ${block.code}`;
+		default: return block.text;
+	}
+}
+function trapCards() {
+	const out = [];
+	for (const topic of topics) for (const block of topic.blocks) if (block.kind === "trap") out.push({
+		topic,
+		text: block.text
+	});
+	return out;
+}
+function filledCount() {
+	return topics.filter((t) => t.source === "filled").length;
+}
+function mergedCount() {
+	return topics.filter((t) => t.source === "merged").length;
+}
+//#endregion
+export { getTopic as a, topics as c, getDrill as i, topicsForChapter as l, filledCount as n, mergedCount as o, getChapter as r, searchTopics as s, chapters as t, trapCards as u };
